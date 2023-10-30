@@ -4,12 +4,11 @@
 
 int main(void)
 {
-  DDRB = 0x0F;
+  DDRB = 0xFF;
+  PORTB = 0;
   while (1)
   {
-    PORTB = 0x0F;
-    _delay_ms(1000);
-    PORTB = 0;
-    _delay_ms(1000);
+    PORTB = ~PORTB;
+    _delay_ms(LED_DALAY);
   }
 }
