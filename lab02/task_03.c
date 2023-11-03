@@ -35,4 +35,6 @@ ISR(INT0_vect)
         count ++;
         PORTB = count;
     }
+
+    _delay_ms(100);
 }

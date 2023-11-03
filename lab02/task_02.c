@@ -26,4 +26,5 @@ int main()
 ISR(INT0_vect)
 {
   PORTB = ~PORTB;
+  _delay_ms(100);
 }
