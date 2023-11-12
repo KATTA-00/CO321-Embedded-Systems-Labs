@@ -4,11 +4,11 @@
 #define LED1_PIN 0
 #define LED2_PIN 1
 
-#define LED1_COUNT_MAIN 12
-#define LED1_COUNT_SUB 53
+#define LED1_COUNT_LIMIT 12
+#define LED1_SUB_START 203
 
 int led1Count  = 0;
-int led2Count  = 0;
+unsigned char led1Flag = 0; 
 
 int main(void){
     DDRB |= (1<<LED1_PIN) | (1<<LED2_PIN);   //Set output pins 5
@@ -19,7 +19,7 @@ int main(void){
     TCCR0B = 0x04;  //Prescalar 256
 
     // TIMER1 config
-    TCNT1 = 0;    //Initial counter value
+    TCNT1 = 34286;    //Initial counter value
     TCCR1A = 0x00;  //Normal Mode
     TCCR1B = 0x04;  //Prescalar 256
 
@@ -32,7 +32,6 @@ int main(void){
     PORTB = PORTB | (1<<LED2_PIN);
 
     led1Count = 0;
-    led2Count = 0;
 
     while(1){
     }
@@ -41,11 +40,23 @@ int main(void){
 
 ISR(TIMER0_OVF_vect){
 
-    if (count == LED1_COUNT_MAIN){
-        PORTB = PORTB ^ (1<<5);
-        count = 0;
-    }else
-        count++;
+    if (led1Flag == 1){
+        led1Flag = 0;
+        PORTB = PORTB ^ (1<<LED1_PIN);
+        TCNT0 = 0;    //Initial timer0 value
+    }
+    else if (led1Count == LED1_COUNT_LIMIT){
+        led1Flag = 1;
+        led1Count = 0;
+        TCNT0 = LED1_SUB_START;
+    } else{
+        led1Count++;
+        TCNT0 = 0;    //Initial timer0 value
+    }
 
-    TCNT0 = 6;    //Initial timer0 value
+}
+
+ISR(TIMER1_OVF_vect){
+    PORTB = PORTB ^ (1<<LED2_PIN);
+    TCNT1 = 34286;    //Initial counter value
 }
