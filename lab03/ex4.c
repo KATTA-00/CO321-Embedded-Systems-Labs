@@ -45,5 +45,4 @@ ISR(TIMER1_OVF_vect){
     PORTB = PORTB ^ (1<<5);
     TCNT1 = 49911;    //Initial counter value
 
-
 }
