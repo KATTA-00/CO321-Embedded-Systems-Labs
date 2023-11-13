@@ -24,6 +24,4 @@ int main(void){
         PORTB = PORTB & ~(1<<5);
         delay_timer0();
     }
-
-    
 }
