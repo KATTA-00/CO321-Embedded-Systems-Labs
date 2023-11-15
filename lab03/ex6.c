@@ -2,7 +2,7 @@
 #include <avr/interrupt.h>
 
 #define LED1_PIN 0
-#define LED2_PIN 1
+#define LED2_PIN 5
 
 #define LED1_COUNT_LIMIT 12
 #define LED1_SUB_START 203
