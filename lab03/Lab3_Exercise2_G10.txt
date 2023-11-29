@@ -1,0 +1,33 @@
+XTAL = 16MHz → Txtal _clock = 1/16 μs
+
+Prescaler = 1:1024 → Tcounter_clock = 1024 × (1/16)μs
+                                    = 64 μs
+
+Required delay = 500 ms
+Counter increments needed   = 500 ms / 64 μs 
+                            = 7812.5 increments (Not an integer value)
+
+
+Let's try 256 Prescalar 
+
+Tcounter_clock  = 256 × (1/16)μs
+                = 16 μs
+
+Required delay = 500 ms
+Counter increments needed = 500 ms / 16 μs 
+                          = 31250 increments
+
+But we can count 256 increments using TIMER0
+So that, we need several overflows to count 31250
+
+256 * 122       = 31232 --> 122 fully overflows
+31250 - 31232   = 18 increments
+
+
+Initial counter value   = 1+255 – 18 
+                        = 238
+
+
+First round starts with initial value of 238. 
+After 123 times overflows,toggle the LED.
+Again reset the inital value to 238.
