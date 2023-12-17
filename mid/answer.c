@@ -44,16 +44,9 @@ int main(void)
     {
         if (stop == 1 && (PORTB & (1 << 3)))
         {
-            if (first_step == 1)
-            {
-                TCCR2A = 0x00;
-                TCCR2A |= (1 << WGM21) | (1 << WGM20) | (1 << COM2A1);
-                TCCR2B = 0x01;
-
-                OCR2A = 255;
-
-                first_step = 0;
-            }
+            TCCR2A = 0x00;
+            TCCR2A |= (1 << WGM21) | (1 << WGM20) | (1 << COM2A1);
+            TCCR2B = 0x01;
 
             if (OCR2A == 0)
                 val = 1;
@@ -68,6 +61,7 @@ int main(void)
         {
             TCCR2A = 0x00;
             TCCR2B = 0x00;
+            OCR2A = 255;
         }
     }
 
@@ -107,15 +101,14 @@ ISR(INT0_vect)
     // {
     //     TCCR0B |= (1 << CS02);
     // }
+    TIMSK0 ^= (1 << TOIE0);
 
     if (stop == 0)
     {
         stop = 1;
-        first_step = 1;
     }
     else
         stop = 0;
 
-    TIMSK0 ^= (1 << TOIE0);
     _delay_ms(DELAY_BUTTON);
 }
