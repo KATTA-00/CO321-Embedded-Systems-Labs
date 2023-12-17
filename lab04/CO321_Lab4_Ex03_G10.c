@@ -7,7 +7,8 @@
 // Define the delay for changing the PWM frequency
 #define LED_DELAY 1000
 
-int main(void){
+int main(void)
+{
     // Set the LED pin as an output
     DDRD = DDRD | (1 << LED_PIN);
 
@@ -24,15 +25,18 @@ int main(void){
     OCR0B = 125;
 
     // Infinite loop for PWM frequency variation
-    while(1){
+    while (1)
+    {
         // Increase the prescaler to decrease the PWM frequency (slowly fading in)
-        for (int i = 0; i < 3; i++){
+        for (int i = 0; i < 3; i++)
+        {
             TCCR0B += 1;
             _delay_ms(LED_DELAY);
         }
 
         // Decrease the prescaler to increase the PWM frequency (slowly fading out)
-        for (int i = 0; i < 3; i++){
+        for (int i = 0; i < 3; i++)
+        {
             TCCR0B -= 1;
             _delay_ms(LED_DELAY);
         }
