@@ -12,7 +12,7 @@ int main(void)
 {
   DDRB = 0x0F; /* configure PORTB for output*/
   unsigned char z = 1;
-  
+
   while (1)
   {
     for (int i = 0; i < LED_NUM - 1; i++)

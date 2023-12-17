@@ -13,36 +13,41 @@ int main()
 {
     // config the pin as inputs and outputs
     DDRB = 0xff;
-    DDRD &=  ~(1 << PUSH_BUTTON);
+    DDRD &= ~(1 << PUSH_BUTTON);
 
     // define the count var
     unsigned char count = 0;
     char flag = 0;
     PORTB = count;
 
-    while (1){
+    while (1)
+    {
 
         // if the button is pressed
-        if ((PIND & (1 << PUSH_BUTTON)) && flag == 0) {
+        if ((PIND & (1 << PUSH_BUTTON)) && flag == 0)
+        {
             // if the count hits the maximum
-            if (count == 0x111111){
-                count  = 0;
+            if (count == 0x111111)
+            {
+                count = 0;
                 PORTB = count;
                 flag = 1;
-            // else increment the count and output
-            } else {
-                count ++;
+                // else increment the count and output
+            }
+            else
+            {
+                count++;
                 PORTB = count;
                 flag = 1;
             }
 
-        // when the button is released
-        }else if (!(PIND & (1 << PUSH_BUTTON)) && flag == 1){
+            // when the button is released
+        }
+        else if (!(PIND & (1 << PUSH_BUTTON)) && flag == 1)
+        {
             flag = 0;
         }
-
     }
-  
-    return 0;
 
+    return 0;
 }

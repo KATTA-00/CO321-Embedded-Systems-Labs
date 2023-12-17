@@ -4,7 +4,7 @@
 
 int main(void)
 {
-  DDRB = 0x0F;
+  DDRB = 0xFF;
   PORTB = 0;
   while (1)
   {

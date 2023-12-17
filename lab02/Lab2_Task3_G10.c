@@ -6,7 +6,7 @@ is displayed as a binary number on a set of LEDs connected to PORTB
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
-// define the INT0 
+// define the INT0
 #define PUSH_BUTTON 2
 // define the count var
 unsigned char count = 0;
@@ -15,7 +15,7 @@ int main()
 {
     // config the pin as inputs and outputs
     DDRB = 0xff;
-    DDRD &=  ~(1 << PUSH_BUTTON);
+    DDRD &= ~(1 << PUSH_BUTTON);
 
     // set the interrupt mode of the INT0
     EICRA |= (1 << ISC01);
@@ -30,23 +30,26 @@ int main()
     // set the PORTB to count
     PORTB = count;
 
-    while (1){
+    while (1)
+    {
     }
-  
-    return 0;
 
+    return 0;
 }
 
 // set the ISR for INT0
 ISR(INT0_vect)
 {
     // if the count hits maximum, reset the count
-    if (count == 0x111111){
-        count  = 0;
+    if (count == 0x111111)
+    {
+        count = 0;
         PORTB = count;
-    // else increment the count and output
-    } else {
-        count ++;
+        // else increment the count and output
+    }
+    else
+    {
+        count++;
         PORTB = count;
     }
 

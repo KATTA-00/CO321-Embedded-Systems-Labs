@@ -24,8 +24,8 @@ int main()
 {
     // config the pin as inputs and outputs
     DDRB = 0xff;
-    DDRD &=  ~(1 << PUSH_BUTTON_1);
-    DDRD &=  ~(1 << PUSH_BUTTON_2);
+    DDRD &= ~(1 << PUSH_BUTTON_1);
+    DDRD &= ~(1 << PUSH_BUTTON_2);
     // set the interrupt mode of the INT0
     EICRA |= (1 << ISC01);
     EICRA |= (1 << ISC00);
@@ -42,11 +42,11 @@ int main()
     // set PORTB to 0
     PORTB = 0;
 
-    while (1){
+    while (1)
+    {
     }
-  
-    return 0;
 
+    return 0;
 }
 
 // set the ISR for INT0
@@ -54,12 +54,12 @@ ISR(INT0_vect)
 {
     /*
     when the count is less than LED_COUNT,
-    if the INT0(push button for 1) is pressed, set HIGH the count LED 
+    if the INT0(push button for 1) is pressed, set HIGH the count LED
     and increment the count by one
     */
     if (count < LED_COUNT)
     {
-        PORTB |= (1<<count);
+        PORTB |= (1 << count);
         count++;
     }
 
