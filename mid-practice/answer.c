@@ -47,7 +47,7 @@ int main(void)
     {
         if (stop == 1 && (PORTB & (1 << 3)))
         {
-            TCCR2A = 0x00;
+            // TCCR2A = 0x00;
             TCCR2A |= (1 << WGM21) | (1 << WGM20) | (1 << COM2A1);
             TCCR2B = 0x01;
 

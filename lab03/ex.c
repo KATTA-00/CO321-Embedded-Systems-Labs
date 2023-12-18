@@ -28,6 +28,7 @@ int main(void)
     TCNT0 = 0x00;
 
     TIMSK0 |= (1 << TOIE0);
+
     sei();
 
     while (1)
@@ -39,6 +40,6 @@ int main(void)
 
 ISR(TIMER0_OVF_vect)
 {
-    // PORTB = ~PORTB;
-    TCNT0 = 0x00;
+    PORTB = ~PORTB;
+    // TCNT0 = 0x00;
 }

@@ -1,5 +1,6 @@
 #include <avr/io.h>
 #include <util/delay.h>
+#include <avr/interrupt.h>
 
 int main(void)
 {
@@ -10,8 +11,8 @@ int main(void)
 
     while (1)
     {
-        PORTB = 0xFF;
-        PORTD = 0xFF;
+        // PORTB = 0x25;
+        // PORTD = 0xFF;
         _delay_ms(500);
 
         PORTB = 0x00;
