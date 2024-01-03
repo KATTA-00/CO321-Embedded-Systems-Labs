@@ -1,7 +1,7 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
-#define FOSC 1843200 // Clock Speed
+#define FOSC 16000000 // Clock Speed
 #define BAUD 9600
 #define MYUBRR FOSC / 16 / BAUD - 1
 
@@ -15,7 +15,7 @@ void usart_init(unsigned int ubrr)
     UCSR0B = (1 << RXEN0) | (1 << TXEN0);
 
     /* Set frame format: 8data, 1stop bit */
-    UCSR0C = (3 << UCSZ00);
+    UCSR0C |= (1 << UCSZ00) | (1 << UCSZ01);
 }
 
 void usart_send(unsigned char data)

@@ -15,7 +15,7 @@ void usart_init(unsigned int ubrr)
     UCSR0B = (1 << RXEN0) | (1 << TXEN0);
 
     /* Set frame format: 8data, 1stop bit */
-    UCSR0C = (3 << UCSZ00);
+    UCSR0C |= (1 << UCSZ00) | (1 << UCSZ01);
 }
 
 void usart_send(unsigned char data)
@@ -53,9 +53,9 @@ void main(void)
 
     while (1)
     {
-        usart_send_string("E/19/124 -\n");
+        usart_send_string("E/19/124 - M.H. Gunawasekara\n");
         usart_send_string("E/19/129 - K.H. Gunawardana\n");
-        usart_send_string("E/19/131 -\n");
+        usart_send_string("E/19/131 - A.P.K Hansachapa\n");
 
         _delay_ms(1000);
     }
