@@ -1,32 +1,34 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
-// Define the pin 
+// Define the pin
 #define ADC_IN 1
 
-int main(void){
+int main(void)
+{
     DDRC = DDRC & ~(1 << ADC_IN);
     DDRD = 0xff;
 
     // ADCSRA |= (1 << ADEN);
 
+    ADCSRA = 0x00;
     ADCSRA = 0b10000111;
-    ADMUX = 0b01100001;
+    ADMXUX = 0x00;
+    ADMUX = 0b01000001;
 
-
-    while(1){
+    while (1)
+    {
 
         _delay_ms(500); /* time delay */
 
         ADCSRA |= (1 << ADSC);
 
-        while(!(ADCSRA & (1 << ADIF))){
-
+        while (!(ADCSRA & (1 << ADIF)))
+        {
         }
 
         PORTD = ADCH;
 
         ADCSRA &= ~(1 << ADSC);
-
     }
 }
