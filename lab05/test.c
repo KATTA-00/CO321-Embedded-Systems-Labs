@@ -70,14 +70,14 @@ int main(void)
     usart_init(MYUBRR);
 
     DDRC = DDRC & ~(1 << ADC_IN);
-    DDRD = 0xff;
-
-    // ADCSRA |= (1 << ADEN);
+    DDRD = 0xFF;
 
     ADCSRA = 0x00;
-    ADCSRA = 0b10000111;
+    // ADCSRA = 0b10000111;
+    ADCSRA |= (1 << ADEN) | (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0);
     ADMUX = 0x00;
-    ADMUX = 0b01000001;
+    // ADMUX = 0b01100001;
+    ADMUX |= (1 << REFS0) | (1 << MUX0) | (1 << ADLAR);
 
     while (1)
     {
@@ -90,10 +90,10 @@ int main(void)
         {
         }
 
-        PORTD = ADCL;
+        PORTD = ADCH;
+        val = ADCH;
 
-        ADCSRA &= ~(1 << ADSC);
-
-        usart_send_int(ADCL);
+        usart_send_int(val);
+        usart_send_string("\n");
     }
 }
