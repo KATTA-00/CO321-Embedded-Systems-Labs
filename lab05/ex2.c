@@ -2,9 +2,9 @@
 #include <util/delay.h>
 
 // Define the pin
-#define ADC_IN 2
-#define DELAY 500
-#define LIMIT 250
+#define ADC_IN 1
+#define DELAY 100
+#define LIMIT 245
 
 int main(void)
 {
@@ -16,7 +16,7 @@ int main(void)
     ADCSRA |= (1 << ADEN) | (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0);
     ADMUX = 0x00;
     // ADMUX = 0b01100001;
-    ADMUX |= (1 << MUX1) | (1 << ADLAR);
+    ADMUX |= (1 << MUX0) | (1 << ADLAR);
 
     while (1)
     {

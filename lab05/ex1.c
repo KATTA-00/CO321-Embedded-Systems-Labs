@@ -11,10 +11,8 @@ int main(void)
     DDRD = 0xFF;
 
     ADCSRA = 0x00;
-    // ADCSRA = 0b10000111;
     ADCSRA |= (1 << ADEN) | (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0);
     ADMUX = 0x00;
-    // ADMUX = 0b01100001;
     ADMUX |= (1 << REFS0) | (1 << MUX0) | (1 << ADLAR);
 
     while (1)
