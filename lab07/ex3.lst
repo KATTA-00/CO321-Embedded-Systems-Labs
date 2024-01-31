@@ -1,0 +1,1408 @@
+   1               		.file	"ex3.c"
+   2               	__SP_H__ = 0x3e
+   3               	__SP_L__ = 0x3d
+   4               	__SREG__ = 0x3f
+   5               	__tmp_reg__ = 0
+   6               	__zero_reg__ = 1
+   7               		.text
+   8               	.Ltext0:
+   9               		.cfi_sections	.debug_frame
+  10               	.global	columnOutRowIn
+  12               	columnOutRowIn:
+  13               	.LFB11:
+  14               		.file 1 "ex3.c"
+   1:ex3.c         **** /*************************************************************************
+   2:ex3.c         **** Title:    Testing output to a HD44780 based LCD display.
+   3:ex3.c         **** Author:   Peter Fleury  <pfleury@gmx.ch>  http://tinyurl.com/peterfleury
+   4:ex3.c         **** File:     $Id: test_lcd.c,v 1.8 2015/01/31 18:04:08 peter Exp $
+   5:ex3.c         **** Software: AVR-GCC 4.x
+   6:ex3.c         **** Hardware: HD44780 compatible LCD text display
+   7:ex3.c         ****           AVR with external SRAM interface if memory-mapped LCD interface is used
+   8:ex3.c         ****           any AVR with 7 free I/O pins if 4-bit IO port mode is used
+   9:ex3.c         **** **************************************************************************/
+  10:ex3.c         **** #include <stdlib.h>
+  11:ex3.c         **** #include <avr/io.h>
+  12:ex3.c         **** #include <avr/pgmspace.h>
+  13:ex3.c         **** #include <util/delay.h>
+  14:ex3.c         **** #include "lcd.h"
+  15:ex3.c         **** 
+  16:ex3.c         **** #define SIZE 10
+  17:ex3.c         **** #define ADDRESS 0
+  18:ex3.c         **** 
+  19:ex3.c         **** char buffer[SIZE + 1] = "1234567890\0";
+  20:ex3.c         **** int key;
+  21:ex3.c         **** char input = '2';
+  22:ex3.c         **** 
+  23:ex3.c         **** void columnOutRowIn()
+  24:ex3.c         **** {
+  15               		.loc 1 24 0
+  16               		.cfi_startproc
+  17               	/* prologue: function */
+  18               	/* frame size = 0 */
+  19               	/* stack size = 0 */
+  20               	.L__stack_usage = 0
+  25:ex3.c         **** 
+  26:ex3.c         ****     // DDRB
+  27:ex3.c         ****     // DDRB = 0b00000011;
+  28:ex3.c         ****     // DDRD = 0b11000000;
+  29:ex3.c         **** 
+  30:ex3.c         ****     DDRB |= (1 << PINB0) | (1 << PINB1);
+  21               		.loc 1 30 0
+  22 0000 84B1      		in r24,0x4
+  23 0002 8360      		ori r24,lo8(3)
+  24 0004 84B9      		out 0x4,r24
+  31:ex3.c         ****     DDRB &= ~((1 << PINB2) | (1 << PINB3) | (1 << PINB4) | (1 << PINB5));
+  25               		.loc 1 31 0
+  26 0006 84B1      		in r24,0x4
+  27 0008 837C      		andi r24,lo8(-61)
+  28 000a 84B9      		out 0x4,r24
+  32:ex3.c         ****     DDRD |= (1 << PIND6) | (1 << PIND7);
+  29               		.loc 1 32 0
+  30 000c 8AB1      		in r24,0xa
+  31 000e 806C      		ori r24,lo8(-64)
+  32 0010 8AB9      		out 0xa,r24
+  33:ex3.c         **** 
+  34:ex3.c         ****     // PORTB = 0b00000011;
+  35:ex3.c         ****     // PORTD = 0b11000000;
+  36:ex3.c         **** 
+  37:ex3.c         ****     PORTB |= (1 << PINB0) | (1 << PINB1);
+  33               		.loc 1 37 0
+  34 0012 85B1      		in r24,0x5
+  35 0014 8360      		ori r24,lo8(3)
+  36 0016 85B9      		out 0x5,r24
+  38:ex3.c         ****     PORTB &= ~((1 << PINB2) | (1 << PINB3) | (1 << PINB4) | (1 << PINB5));
+  37               		.loc 1 38 0
+  38 0018 85B1      		in r24,0x5
+  39 001a 837C      		andi r24,lo8(-61)
+  40 001c 85B9      		out 0x5,r24
+  39:ex3.c         ****     PORTD |= (1 << PIND6) | (1 << PIND7);
+  41               		.loc 1 39 0
+  42 001e 8BB1      		in r24,0xb
+  43 0020 806C      		ori r24,lo8(-64)
+  44 0022 8BB9      		out 0xb,r24
+  45               	.LVL0:
+  46               	.LBB34:
+  47               	.LBB35:
+  48               		.file 2 "/usr/lib/avr/include/util/delay.h"
+   1:/usr/lib/avr/include/util/delay.h **** /* Copyright (c) 2002, Marek Michalkiewicz
+   2:/usr/lib/avr/include/util/delay.h ****    Copyright (c) 2004,2005,2007 Joerg Wunsch
+   3:/usr/lib/avr/include/util/delay.h ****    Copyright (c) 2007  Florin-Viorel Petrov
+   4:/usr/lib/avr/include/util/delay.h ****    All rights reserved.
+   5:/usr/lib/avr/include/util/delay.h **** 
+   6:/usr/lib/avr/include/util/delay.h ****    Redistribution and use in source and binary forms, with or without
+   7:/usr/lib/avr/include/util/delay.h ****    modification, are permitted provided that the following conditions are met:
+   8:/usr/lib/avr/include/util/delay.h **** 
+   9:/usr/lib/avr/include/util/delay.h ****    * Redistributions of source code must retain the above copyright
+  10:/usr/lib/avr/include/util/delay.h ****      notice, this list of conditions and the following disclaimer.
+  11:/usr/lib/avr/include/util/delay.h **** 
+  12:/usr/lib/avr/include/util/delay.h ****    * Redistributions in binary form must reproduce the above copyright
+  13:/usr/lib/avr/include/util/delay.h ****      notice, this list of conditions and the following disclaimer in
+  14:/usr/lib/avr/include/util/delay.h ****      the documentation and/or other materials provided with the
+  15:/usr/lib/avr/include/util/delay.h ****      distribution.
+  16:/usr/lib/avr/include/util/delay.h **** 
+  17:/usr/lib/avr/include/util/delay.h ****    * Neither the name of the copyright holders nor the names of
+  18:/usr/lib/avr/include/util/delay.h ****      contributors may be used to endorse or promote products derived
+  19:/usr/lib/avr/include/util/delay.h ****      from this software without specific prior written permission.
+  20:/usr/lib/avr/include/util/delay.h **** 
+  21:/usr/lib/avr/include/util/delay.h ****   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  22:/usr/lib/avr/include/util/delay.h ****   AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  23:/usr/lib/avr/include/util/delay.h ****   IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  24:/usr/lib/avr/include/util/delay.h ****   ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+  25:/usr/lib/avr/include/util/delay.h ****   LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  26:/usr/lib/avr/include/util/delay.h ****   CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  27:/usr/lib/avr/include/util/delay.h ****   SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  28:/usr/lib/avr/include/util/delay.h ****   INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  29:/usr/lib/avr/include/util/delay.h ****   CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  30:/usr/lib/avr/include/util/delay.h ****   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  31:/usr/lib/avr/include/util/delay.h ****   POSSIBILITY OF SUCH DAMAGE. */
+  32:/usr/lib/avr/include/util/delay.h **** 
+  33:/usr/lib/avr/include/util/delay.h **** /* $Id$ */
+  34:/usr/lib/avr/include/util/delay.h **** 
+  35:/usr/lib/avr/include/util/delay.h **** #ifndef _UTIL_DELAY_H_
+  36:/usr/lib/avr/include/util/delay.h **** #define _UTIL_DELAY_H_ 1
+  37:/usr/lib/avr/include/util/delay.h **** 
+  38:/usr/lib/avr/include/util/delay.h **** #ifndef __DOXYGEN__
+  39:/usr/lib/avr/include/util/delay.h **** #  ifndef __HAS_DELAY_CYCLES
+  40:/usr/lib/avr/include/util/delay.h **** #    define __HAS_DELAY_CYCLES 1
+  41:/usr/lib/avr/include/util/delay.h **** #  endif
+  42:/usr/lib/avr/include/util/delay.h **** #endif  /* __DOXYGEN__ */
+  43:/usr/lib/avr/include/util/delay.h **** 
+  44:/usr/lib/avr/include/util/delay.h **** #include <inttypes.h>
+  45:/usr/lib/avr/include/util/delay.h **** #include <util/delay_basic.h>
+  46:/usr/lib/avr/include/util/delay.h **** #include <math.h>
+  47:/usr/lib/avr/include/util/delay.h **** 
+  48:/usr/lib/avr/include/util/delay.h **** /** \file */
+  49:/usr/lib/avr/include/util/delay.h **** /** \defgroup util_delay <util/delay.h>: Convenience functions for busy-wait delay loops
+  50:/usr/lib/avr/include/util/delay.h ****     \code
+  51:/usr/lib/avr/include/util/delay.h ****     #define F_CPU 1000000UL  // 1 MHz
+  52:/usr/lib/avr/include/util/delay.h ****     //#define F_CPU 14.7456E6
+  53:/usr/lib/avr/include/util/delay.h ****     #include <util/delay.h>
+  54:/usr/lib/avr/include/util/delay.h ****     \endcode
+  55:/usr/lib/avr/include/util/delay.h **** 
+  56:/usr/lib/avr/include/util/delay.h ****     \note As an alternative method, it is possible to pass the
+  57:/usr/lib/avr/include/util/delay.h ****     F_CPU macro down to the compiler from the Makefile.
+  58:/usr/lib/avr/include/util/delay.h ****     Obviously, in that case, no \c \#define statement should be
+  59:/usr/lib/avr/include/util/delay.h ****     used.
+  60:/usr/lib/avr/include/util/delay.h **** 
+  61:/usr/lib/avr/include/util/delay.h ****     The functions in this header file are wrappers around the basic
+  62:/usr/lib/avr/include/util/delay.h ****     busy-wait functions from <util/delay_basic.h>.  They are meant as
+  63:/usr/lib/avr/include/util/delay.h ****     convenience functions where actual time values can be specified
+  64:/usr/lib/avr/include/util/delay.h ****     rather than a number of cycles to wait for.  The idea behind is
+  65:/usr/lib/avr/include/util/delay.h ****     that compile-time constant expressions will be eliminated by
+  66:/usr/lib/avr/include/util/delay.h ****     compiler optimization so floating-point expressions can be used
+  67:/usr/lib/avr/include/util/delay.h ****     to calculate the number of delay cycles needed based on the CPU
+  68:/usr/lib/avr/include/util/delay.h ****     frequency passed by the macro F_CPU.
+  69:/usr/lib/avr/include/util/delay.h **** 
+  70:/usr/lib/avr/include/util/delay.h ****     \note In order for these functions to work as intended, compiler
+  71:/usr/lib/avr/include/util/delay.h ****     optimizations <em>must</em> be enabled, and the delay time
+  72:/usr/lib/avr/include/util/delay.h ****     <em>must</em> be an expression that is a known constant at
+  73:/usr/lib/avr/include/util/delay.h ****     compile-time.  If these requirements are not met, the resulting
+  74:/usr/lib/avr/include/util/delay.h ****     delay will be much longer (and basically unpredictable), and
+  75:/usr/lib/avr/include/util/delay.h ****     applications that otherwise do not use floating-point calculations
+  76:/usr/lib/avr/include/util/delay.h ****     will experience severe code bloat by the floating-point library
+  77:/usr/lib/avr/include/util/delay.h ****     routines linked into the application.
+  78:/usr/lib/avr/include/util/delay.h **** 
+  79:/usr/lib/avr/include/util/delay.h ****     The functions available allow the specification of microsecond, and
+  80:/usr/lib/avr/include/util/delay.h ****     millisecond delays directly, using the application-supplied macro
+  81:/usr/lib/avr/include/util/delay.h ****     F_CPU as the CPU clock frequency (in Hertz).
+  82:/usr/lib/avr/include/util/delay.h **** 
+  83:/usr/lib/avr/include/util/delay.h **** */
+  84:/usr/lib/avr/include/util/delay.h **** 
+  85:/usr/lib/avr/include/util/delay.h **** #if !defined(__DOXYGEN__)
+  86:/usr/lib/avr/include/util/delay.h **** static __inline__ void _delay_us(double __us) __attribute__((__always_inline__));
+  87:/usr/lib/avr/include/util/delay.h **** static __inline__ void _delay_ms(double __ms) __attribute__((__always_inline__));
+  88:/usr/lib/avr/include/util/delay.h **** #endif
+  89:/usr/lib/avr/include/util/delay.h **** 
+  90:/usr/lib/avr/include/util/delay.h **** #ifndef F_CPU
+  91:/usr/lib/avr/include/util/delay.h **** /* prevent compiler error by supplying a default */
+  92:/usr/lib/avr/include/util/delay.h **** # warning "F_CPU not defined for <util/delay.h>"
+  93:/usr/lib/avr/include/util/delay.h **** /** \ingroup util_delay
+  94:/usr/lib/avr/include/util/delay.h ****     \def F_CPU
+  95:/usr/lib/avr/include/util/delay.h ****     \brief CPU frequency in Hz
+  96:/usr/lib/avr/include/util/delay.h **** 
+  97:/usr/lib/avr/include/util/delay.h ****     The macro F_CPU specifies the CPU frequency to be considered by
+  98:/usr/lib/avr/include/util/delay.h ****     the delay macros.  This macro is normally supplied by the
+  99:/usr/lib/avr/include/util/delay.h ****     environment (e.g. from within a project header, or the project's
+ 100:/usr/lib/avr/include/util/delay.h ****     Makefile).  The value 1 MHz here is only provided as a "vanilla"
+ 101:/usr/lib/avr/include/util/delay.h ****     fallback if no such user-provided definition could be found.
+ 102:/usr/lib/avr/include/util/delay.h **** 
+ 103:/usr/lib/avr/include/util/delay.h ****     In terms of the delay functions, the CPU frequency can be given as
+ 104:/usr/lib/avr/include/util/delay.h ****     a floating-point constant (e.g. 3.6864E6 for 3.6864 MHz).
+ 105:/usr/lib/avr/include/util/delay.h ****     However, the macros in <util/setbaud.h> require it to be an
+ 106:/usr/lib/avr/include/util/delay.h ****     integer value.
+ 107:/usr/lib/avr/include/util/delay.h ****  */
+ 108:/usr/lib/avr/include/util/delay.h **** # define F_CPU 1000000UL
+ 109:/usr/lib/avr/include/util/delay.h **** #endif
+ 110:/usr/lib/avr/include/util/delay.h **** 
+ 111:/usr/lib/avr/include/util/delay.h **** #ifndef __OPTIMIZE__
+ 112:/usr/lib/avr/include/util/delay.h **** # warning "Compiler optimizations disabled; functions from <util/delay.h> won't work as designed"
+ 113:/usr/lib/avr/include/util/delay.h **** #endif
+ 114:/usr/lib/avr/include/util/delay.h **** 
+ 115:/usr/lib/avr/include/util/delay.h **** #if __HAS_DELAY_CYCLES && defined(__OPTIMIZE__) && \
+ 116:/usr/lib/avr/include/util/delay.h ****   !defined(__DELAY_BACKWARD_COMPATIBLE__) &&	   \
+ 117:/usr/lib/avr/include/util/delay.h ****   __STDC_HOSTED__
+ 118:/usr/lib/avr/include/util/delay.h **** #  include <math.h>
+ 119:/usr/lib/avr/include/util/delay.h **** #endif
+ 120:/usr/lib/avr/include/util/delay.h **** 
+ 121:/usr/lib/avr/include/util/delay.h **** /**
+ 122:/usr/lib/avr/include/util/delay.h ****    \ingroup util_delay
+ 123:/usr/lib/avr/include/util/delay.h **** 
+ 124:/usr/lib/avr/include/util/delay.h ****    Perform a delay of \c __ms milliseconds, using _delay_loop_2().
+ 125:/usr/lib/avr/include/util/delay.h **** 
+ 126:/usr/lib/avr/include/util/delay.h ****    The macro F_CPU is supposed to be defined to a
+ 127:/usr/lib/avr/include/util/delay.h ****    constant defining the CPU clock frequency (in Hertz).
+ 128:/usr/lib/avr/include/util/delay.h **** 
+ 129:/usr/lib/avr/include/util/delay.h ****    The maximal possible delay is 262.14 ms / F_CPU in MHz.
+ 130:/usr/lib/avr/include/util/delay.h **** 
+ 131:/usr/lib/avr/include/util/delay.h ****    When the user request delay which exceed the maximum possible one,
+ 132:/usr/lib/avr/include/util/delay.h ****    _delay_ms() provides a decreased resolution functionality. In this
+ 133:/usr/lib/avr/include/util/delay.h ****    mode _delay_ms() will work with a resolution of 1/10 ms, providing
+ 134:/usr/lib/avr/include/util/delay.h ****    delays up to 6.5535 seconds (independent from CPU frequency).  The
+ 135:/usr/lib/avr/include/util/delay.h ****    user will not be informed about decreased resolution.
+ 136:/usr/lib/avr/include/util/delay.h **** 
+ 137:/usr/lib/avr/include/util/delay.h ****    If the avr-gcc toolchain has __builtin_avr_delay_cycles()
+ 138:/usr/lib/avr/include/util/delay.h ****    support, maximal possible delay is 4294967.295 ms/ F_CPU in MHz. For
+ 139:/usr/lib/avr/include/util/delay.h ****    values greater than the maximal possible delay, overflows results in
+ 140:/usr/lib/avr/include/util/delay.h ****    no delay i.e., 0ms.
+ 141:/usr/lib/avr/include/util/delay.h **** 
+ 142:/usr/lib/avr/include/util/delay.h ****    Conversion of \c __ms into clock cycles may not always result in
+ 143:/usr/lib/avr/include/util/delay.h ****    integer.  By default, the clock cycles rounded up to next
+ 144:/usr/lib/avr/include/util/delay.h ****    integer. This ensures that the user gets at least \c __ms
+ 145:/usr/lib/avr/include/util/delay.h ****    microseconds of delay.
+ 146:/usr/lib/avr/include/util/delay.h **** 
+ 147:/usr/lib/avr/include/util/delay.h ****    Alternatively, by defining the macro \c __DELAY_ROUND_DOWN__, or
+ 148:/usr/lib/avr/include/util/delay.h ****    \c __DELAY_ROUND_CLOSEST__, before including this header file, the
+ 149:/usr/lib/avr/include/util/delay.h ****    algorithm can be made to round down, or round to closest integer,
+ 150:/usr/lib/avr/include/util/delay.h ****    respectively.
+ 151:/usr/lib/avr/include/util/delay.h **** 
+ 152:/usr/lib/avr/include/util/delay.h ****    \note
+ 153:/usr/lib/avr/include/util/delay.h **** 
+ 154:/usr/lib/avr/include/util/delay.h ****    The implementation of _delay_ms() based on
+ 155:/usr/lib/avr/include/util/delay.h ****    __builtin_avr_delay_cycles() is not backward compatible with older
+ 156:/usr/lib/avr/include/util/delay.h ****    implementations.  In order to get functionality backward compatible
+ 157:/usr/lib/avr/include/util/delay.h ****    with previous versions, the macro \c "__DELAY_BACKWARD_COMPATIBLE__"
+ 158:/usr/lib/avr/include/util/delay.h ****    must be defined before including this header file. Also, the
+ 159:/usr/lib/avr/include/util/delay.h ****    backward compatible algorithm will be chosen if the code is
+ 160:/usr/lib/avr/include/util/delay.h ****    compiled in a <em>freestanding environment</em> (GCC option
+ 161:/usr/lib/avr/include/util/delay.h ****    \c -ffreestanding), as the math functions required for rounding are
+ 162:/usr/lib/avr/include/util/delay.h ****    not available to the compiler then.
+ 163:/usr/lib/avr/include/util/delay.h **** 
+ 164:/usr/lib/avr/include/util/delay.h ****  */
+ 165:/usr/lib/avr/include/util/delay.h **** void
+ 166:/usr/lib/avr/include/util/delay.h **** _delay_ms(double __ms)
+ 167:/usr/lib/avr/include/util/delay.h **** {
+ 168:/usr/lib/avr/include/util/delay.h **** 	double __tmp ;
+ 169:/usr/lib/avr/include/util/delay.h **** #if __HAS_DELAY_CYCLES && defined(__OPTIMIZE__) && \
+ 170:/usr/lib/avr/include/util/delay.h ****   !defined(__DELAY_BACKWARD_COMPATIBLE__) &&	   \
+ 171:/usr/lib/avr/include/util/delay.h ****   __STDC_HOSTED__
+ 172:/usr/lib/avr/include/util/delay.h **** 	uint32_t __ticks_dc;
+ 173:/usr/lib/avr/include/util/delay.h **** 	extern void __builtin_avr_delay_cycles(unsigned long);
+ 174:/usr/lib/avr/include/util/delay.h **** 	__tmp = ((F_CPU) / 1e3) * __ms;
+ 175:/usr/lib/avr/include/util/delay.h **** 
+ 176:/usr/lib/avr/include/util/delay.h **** 	#if defined(__DELAY_ROUND_DOWN__)
+ 177:/usr/lib/avr/include/util/delay.h **** 		__ticks_dc = (uint32_t)fabs(__tmp);
+ 178:/usr/lib/avr/include/util/delay.h **** 
+ 179:/usr/lib/avr/include/util/delay.h **** 	#elif defined(__DELAY_ROUND_CLOSEST__)
+ 180:/usr/lib/avr/include/util/delay.h **** 		__ticks_dc = (uint32_t)(fabs(__tmp)+0.5);
+ 181:/usr/lib/avr/include/util/delay.h **** 
+ 182:/usr/lib/avr/include/util/delay.h **** 	#else
+ 183:/usr/lib/avr/include/util/delay.h **** 		//round up by default
+ 184:/usr/lib/avr/include/util/delay.h **** 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+ 185:/usr/lib/avr/include/util/delay.h **** 	#endif
+ 186:/usr/lib/avr/include/util/delay.h **** 
+ 187:/usr/lib/avr/include/util/delay.h **** 	__builtin_avr_delay_cycles(__ticks_dc);
+  49               		.loc 2 187 0
+  50 0024 8FE3      		ldi r24,lo8(-25537)
+  51 0026 9CE9      		ldi r25,hi8(-25537)
+  52 0028 0197      	1:	sbiw r24,1
+  53 002a 01F4      		brne 1b
+  54 002c 00C0      		rjmp .
+  55 002e 0000      		nop
+  56               	.LVL1:
+  57 0030 0895      		ret
+  58               	.LBE35:
+  59               	.LBE34:
+  60               		.cfi_endproc
+  61               	.LFE11:
+  63               	.global	columnInRowOut
+  65               	columnInRowOut:
+  66               	.LFB12:
+  40:ex3.c         **** 
+  41:ex3.c         ****     _delay_ms(10);
+  42:ex3.c         **** }
+  43:ex3.c         **** 
+  44:ex3.c         **** void columnInRowOut()
+  45:ex3.c         **** {
+  67               		.loc 1 45 0
+  68               		.cfi_startproc
+  69               	/* prologue: function */
+  70               	/* frame size = 0 */
+  71               	/* stack size = 0 */
+  72               	.L__stack_usage = 0
+  46:ex3.c         ****     // DDRB = 0b00111100;
+  47:ex3.c         ****     // DDRD = 0b00000000;
+  48:ex3.c         **** 
+  49:ex3.c         ****     DDRB |= (1 << PINB2) | (1 << PINB3) | (1 << PINB4) | (1 << PINB5);
+  73               		.loc 1 49 0
+  74 0032 84B1      		in r24,0x4
+  75 0034 8C63      		ori r24,lo8(60)
+  76 0036 84B9      		out 0x4,r24
+  50:ex3.c         ****     DDRB &= ~((1 << PINB0) | (1 << PINB1));
+  77               		.loc 1 50 0
+  78 0038 84B1      		in r24,0x4
+  79 003a 8C7F      		andi r24,lo8(-4)
+  80 003c 84B9      		out 0x4,r24
+  51:ex3.c         ****     DDRD &= ~((1 << PIND6) | (1 << PIND7));
+  81               		.loc 1 51 0
+  82 003e 8AB1      		in r24,0xa
+  83 0040 8F73      		andi r24,lo8(63)
+  84 0042 8AB9      		out 0xa,r24
+  52:ex3.c         **** 
+  53:ex3.c         ****     // PORTB = 0b00111100;
+  54:ex3.c         ****     // PORTD = 0b00000000;
+  55:ex3.c         **** 
+  56:ex3.c         ****     PORTB |= (1 << PINB2) | (1 << PINB3) | (1 << PINB4) | (1 << PINB5);
+  85               		.loc 1 56 0
+  86 0044 85B1      		in r24,0x5
+  87 0046 8C63      		ori r24,lo8(60)
+  88 0048 85B9      		out 0x5,r24
+  57:ex3.c         ****     PORTB &= ~((1 << PINB0) | (1 << PINB1));
+  89               		.loc 1 57 0
+  90 004a 85B1      		in r24,0x5
+  91 004c 8C7F      		andi r24,lo8(-4)
+  92 004e 85B9      		out 0x5,r24
+  58:ex3.c         ****     PORTD &= ~((1 << PIND6) | (1 << PIND7));
+  93               		.loc 1 58 0
+  94 0050 8BB1      		in r24,0xb
+  95 0052 8F73      		andi r24,lo8(63)
+  96 0054 8BB9      		out 0xb,r24
+  97               	.LVL2:
+  98               	.LBB36:
+  99               	.LBB37:
+ 100               		.loc 2 187 0
+ 101 0056 8FE3      		ldi r24,lo8(-25537)
+ 102 0058 9CE9      		ldi r25,hi8(-25537)
+ 103 005a 0197      	1:	sbiw r24,1
+ 104 005c 01F4      		brne 1b
+ 105 005e 00C0      		rjmp .
+ 106 0060 0000      		nop
+ 107               	.LVL3:
+ 108 0062 0895      		ret
+ 109               	.LBE37:
+ 110               	.LBE36:
+ 111               		.cfi_endproc
+ 112               	.LFE12:
+ 114               		.section	.rodata
+ 115               	.LC0:
+ 116 0000 31        		.byte	49
+ 117 0001 32        		.byte	50
+ 118 0002 33        		.byte	51
+ 119 0003 41        		.byte	65
+ 120 0004 34        		.byte	52
+ 121 0005 35        		.byte	53
+ 122 0006 36        		.byte	54
+ 123 0007 42        		.byte	66
+ 124 0008 37        		.byte	55
+ 125 0009 38        		.byte	56
+ 126 000a 39        		.byte	57
+ 127 000b 43        		.byte	67
+ 128 000c 2A        		.byte	42
+ 129 000d 30        		.byte	48
+ 130 000e 23        		.byte	35
+ 131 000f 44        		.byte	68
+ 132               		.text
+ 133               	.global	getKeyPad
+ 135               	getKeyPad:
+ 136               	.LFB13:
+  59:ex3.c         **** 
+  60:ex3.c         ****     _delay_ms(10);
+  61:ex3.c         **** }
+  62:ex3.c         **** 
+  63:ex3.c         **** char getKeyPad()
+  64:ex3.c         **** {
+ 137               		.loc 1 64 0
+ 138               		.cfi_startproc
+ 139 0064 0F93      		push r16
+ 140               	.LCFI0:
+ 141               		.cfi_def_cfa_offset 3
+ 142               		.cfi_offset 16, -2
+ 143 0066 1F93      		push r17
+ 144               	.LCFI1:
+ 145               		.cfi_def_cfa_offset 4
+ 146               		.cfi_offset 17, -3
+ 147 0068 CF93      		push r28
+ 148               	.LCFI2:
+ 149               		.cfi_def_cfa_offset 5
+ 150               		.cfi_offset 28, -4
+ 151 006a DF93      		push r29
+ 152               	.LCFI3:
+ 153               		.cfi_def_cfa_offset 6
+ 154               		.cfi_offset 29, -5
+ 155 006c CDB7      		in r28,__SP_L__
+ 156 006e DEB7      		in r29,__SP_H__
+ 157               	.LCFI4:
+ 158               		.cfi_def_cfa_register 28
+ 159 0070 6097      		sbiw r28,16
+ 160               	.LCFI5:
+ 161               		.cfi_def_cfa_offset 22
+ 162 0072 0FB6      		in __tmp_reg__,__SREG__
+ 163 0074 F894      		cli
+ 164 0076 DEBF      		out __SP_H__,r29
+ 165 0078 0FBE      		out __SREG__,__tmp_reg__
+ 166 007a CDBF      		out __SP_L__,r28
+ 167               	/* prologue: function */
+ 168               	/* frame size = 16 */
+ 169               	/* stack size = 20 */
+ 170               	.L__stack_usage = 20
+ 171               	.LVL4:
+  65:ex3.c         **** 
+  66:ex3.c         ****     char key = ' ';
+  67:ex3.c         ****     char keyPad[4][4] = {
+ 172               		.loc 1 67 0
+ 173 007c 80E1      		ldi r24,lo8(16)
+ 174 007e E0E0      		ldi r30,lo8(.LC0)
+ 175 0080 F0E0      		ldi r31,hi8(.LC0)
+ 176 0082 DE01      		movw r26,r28
+ 177 0084 1196      		adiw r26,1
+ 178               		0:
+ 179 0086 0190      		ld r0,Z+
+ 180 0088 0D92      		st X+,r0
+ 181 008a 8A95      		dec r24
+ 182 008c 01F4      		brne 0b
+ 183               	.LVL5:
+ 184               	.LBB38:
+ 185               	.LBB39:
+ 186               		.loc 2 187 0
+ 187 008e 8FE3      		ldi r24,lo8(-25537)
+ 188 0090 9CE9      		ldi r25,hi8(-25537)
+ 189 0092 0197      	1:	sbiw r24,1
+ 190 0094 01F4      		brne 1b
+ 191 0096 00C0      		rjmp .
+ 192 0098 0000      		nop
+ 193               	.LVL6:
+ 194               	.LBE39:
+ 195               	.LBE38:
+  68:ex3.c         ****         {'1', '2', '3', 'A'},
+  69:ex3.c         ****         {'4', '5', '6', 'B'},
+  70:ex3.c         ****         {'7', '8', '9', 'C'},
+  71:ex3.c         ****         {'*', '0', '#', 'D'}};
+  72:ex3.c         **** 
+  73:ex3.c         ****     int i = -1;
+  74:ex3.c         ****     int j = -1;
+  75:ex3.c         **** 
+  76:ex3.c         ****     _delay_ms(10);
+  77:ex3.c         ****     columnOutRowIn();
+ 196               		.loc 1 77 0
+ 197 009a 0E94 0000 		call columnOutRowIn
+ 198               	.LVL7:
+ 199               	.L5:
+ 200               	.LBB40:
+ 201               	.LBB41:
+ 202               		.loc 2 187 0
+ 203 009e 8FE3      		ldi r24,lo8(-25537)
+ 204 00a0 9CE9      		ldi r25,hi8(-25537)
+ 205 00a2 0197      	1:	sbiw r24,1
+ 206 00a4 01F4      		brne 1b
+ 207 00a6 00C0      		rjmp .
+ 208 00a8 0000      		nop
+ 209               	.LVL8:
+ 210               	.LBE41:
+ 211               	.LBE40:
+  78:ex3.c         ****     while (i == -1)
+  79:ex3.c         ****     {
+  80:ex3.c         ****         _delay_ms(10);
+  81:ex3.c         ****         if ((PINB & (1 << PINB2)))
+ 212               		.loc 1 81 0
+ 213 00aa 1A99      		sbic 0x3,2
+ 214 00ac 00C0      		rjmp .L12
+  82:ex3.c         ****         {
+  83:ex3.c         ****             i = 3;
+  84:ex3.c         ****         }
+  85:ex3.c         ****         else if ((PINB & (1 << PINB3)))
+ 215               		.loc 1 85 0
+ 216 00ae 1B99      		sbic 0x3,3
+ 217 00b0 00C0      		rjmp .L13
+  86:ex3.c         ****         {
+  87:ex3.c         ****             i = 2;
+  88:ex3.c         ****         }
+  89:ex3.c         ****         else if ((PINB & (1 << PINB4)))
+ 218               		.loc 1 89 0
+ 219 00b2 1C99      		sbic 0x3,4
+ 220 00b4 00C0      		rjmp .L14
+ 221               	.LVL9:
+  78:ex3.c         ****     {
+ 222               		.loc 1 78 0
+ 223 00b6 1D9B      		sbis 0x3,5
+ 224 00b8 00C0      		rjmp .L5
+  90:ex3.c         ****         {
+  91:ex3.c         ****             i = 1;
+  92:ex3.c         ****         }
+  93:ex3.c         ****         else if ((PINB & (1 << PINB5)))
+ 225               		.loc 1 93 0
+ 226 00ba 00E0      		ldi r16,0
+ 227 00bc 10E0      		ldi r17,0
+ 228               	.L11:
+ 229               	.LVL10:
+ 230               	.LBB42:
+ 231               	.LBB43:
+ 232               		.loc 2 187 0
+ 233 00be 8FE3      		ldi r24,lo8(-25537)
+ 234 00c0 9CE9      		ldi r25,hi8(-25537)
+ 235 00c2 0197      	1:	sbiw r24,1
+ 236 00c4 01F4      		brne 1b
+ 237 00c6 00C0      		rjmp .
+ 238 00c8 0000      		nop
+ 239               	.LVL11:
+ 240               	.LBE43:
+ 241               	.LBE42:
+  94:ex3.c         ****         {
+  95:ex3.c         ****             i = 0;
+  96:ex3.c         ****         }
+  97:ex3.c         ****     }
+  98:ex3.c         **** 
+  99:ex3.c         ****     _delay_ms(10);
+ 100:ex3.c         **** 
+ 101:ex3.c         ****     columnInRowOut();
+ 242               		.loc 1 101 0
+ 243 00ca 0E94 0000 		call columnInRowOut
+ 244               	.LVL12:
+ 245               	.L10:
+ 246               	.LBB44:
+ 247               	.LBB45:
+ 248               		.loc 2 187 0
+ 249 00ce 8FE3      		ldi r24,lo8(-25537)
+ 250 00d0 9CE9      		ldi r25,hi8(-25537)
+ 251 00d2 0197      	1:	sbiw r24,1
+ 252 00d4 01F4      		brne 1b
+ 253 00d6 00C0      		rjmp .
+ 254 00d8 0000      		nop
+ 255 00da 8FEF      		ldi r24,lo8(-1)
+ 256 00dc 9FEF      		ldi r25,lo8(-1)
+ 257               	.LVL13:
+ 258               	.L6:
+ 259               	.LBE45:
+ 260               	.LBE44:
+ 102:ex3.c         ****     while (j == -1)
+ 103:ex3.c         ****     {
+ 104:ex3.c         ****         _delay_ms(10);
+ 105:ex3.c         ****         while ((PIND & (1 << PINB6)))
+ 261               		.loc 1 105 0
+ 262 00de 4E9B      		sbis 0x9,6
+ 263 00e0 00C0      		rjmp .L7
+ 106:ex3.c         ****         {
+ 107:ex3.c         ****             j = 3;
+ 264               		.loc 1 107 0
+ 265 00e2 83E0      		ldi r24,lo8(3)
+ 266 00e4 90E0      		ldi r25,0
+ 267               	.LVL14:
+ 268 00e6 00C0      		rjmp .L6
+ 269               	.L7:
+ 270               	.LVL15:
+ 108:ex3.c         ****         }
+ 109:ex3.c         ****         while ((PIND & (1 << PINB7)))
+ 271               		.loc 1 109 0
+ 272 00e8 4F9B      		sbis 0x9,7
+ 273 00ea 00C0      		rjmp .L8
+ 110:ex3.c         ****         {
+ 111:ex3.c         ****             j = 2;
+ 274               		.loc 1 111 0
+ 275 00ec 82E0      		ldi r24,lo8(2)
+ 276 00ee 90E0      		ldi r25,0
+ 277               	.LVL16:
+ 278 00f0 00C0      		rjmp .L7
+ 279               	.L8:
+ 280               	.LVL17:
+ 112:ex3.c         ****         }
+ 113:ex3.c         ****         while ((PINB & (1 << PINB0)))
+ 281               		.loc 1 113 0
+ 282 00f2 189B      		sbis 0x3,0
+ 283 00f4 00C0      		rjmp .L9
+ 114:ex3.c         ****         {
+ 115:ex3.c         ****             j = 1;
+ 284               		.loc 1 115 0
+ 285 00f6 81E0      		ldi r24,lo8(1)
+ 286 00f8 90E0      		ldi r25,0
+ 287               	.LVL18:
+ 288 00fa 00C0      		rjmp .L8
+ 289               	.L9:
+ 290               	.LVL19:
+ 116:ex3.c         ****         }
+ 117:ex3.c         ****         while ((PINB & (1 << PINB1)))
+ 291               		.loc 1 117 0
+ 292 00fc 199B      		sbis 0x3,1
+ 293 00fe 00C0      		rjmp .L25
+ 118:ex3.c         ****         {
+ 119:ex3.c         ****             j = 0;
+ 294               		.loc 1 119 0
+ 295 0100 80E0      		ldi r24,0
+ 296 0102 90E0      		ldi r25,0
+ 297               	.LVL20:
+ 298 0104 00C0      		rjmp .L9
+ 299               	.LVL21:
+ 300               	.L25:
+ 102:ex3.c         ****     {
+ 301               		.loc 1 102 0
+ 302 0106 8F3F      		cpi r24,-1
+ 303 0108 2FEF      		ldi r18,-1
+ 304 010a 9207      		cpc r25,r18
+ 305 010c 01F0      		breq .L10
+ 306               	.LVL22:
+ 307               	.LBB46:
+ 308               	.LBB47:
+ 309               		.loc 2 187 0
+ 310 010e 3FEF      		ldi r19,lo8(319999)
+ 311 0110 41EE      		ldi r20,hi8(319999)
+ 312 0112 24E0      		ldi r18,hlo8(319999)
+ 313 0114 3150      	1:	subi r19,1
+ 314 0116 4040      		sbci r20,0
+ 315 0118 2040      		sbci r18,0
+ 316 011a 01F4      		brne 1b
+ 317 011c 00C0      		rjmp .
+ 318 011e 0000      		nop
+ 319               	.LVL23:
+ 320               	.LBE47:
+ 321               	.LBE46:
+ 120:ex3.c         ****         }
+ 121:ex3.c         ****     }
+ 122:ex3.c         **** 
+ 123:ex3.c         ****     _delay_ms(100);
+ 124:ex3.c         **** 
+ 125:ex3.c         ****     // usart_send_string("i, j - ");
+ 126:ex3.c         ****     // usart_send_int(i);
+ 127:ex3.c         ****     // usart_send(',');
+ 128:ex3.c         ****     // usart_send_int(j);
+ 129:ex3.c         ****     // usart_send('\n');
+ 130:ex3.c         **** 
+ 131:ex3.c         ****     // usart_send_string("values - ");
+ 132:ex3.c         ****     // usart_send(keyPad[i][j]);
+ 133:ex3.c         ****     // usart_send('\n');
+ 134:ex3.c         **** 
+ 135:ex3.c         ****     return keyPad[i][j];
+ 322               		.loc 1 135 0
+ 323 0120 000F      		lsl r16
+ 324 0122 111F      		rol r17
+ 325 0124 000F      		lsl r16
+ 326 0126 111F      		rol r17
+ 327               	.LVL24:
+ 328 0128 21E0      		ldi r18,lo8(1)
+ 329 012a 30E0      		ldi r19,0
+ 330 012c 2C0F      		add r18,r28
+ 331 012e 3D1F      		adc r19,r29
+ 332 0130 020F      		add r16,r18
+ 333 0132 131F      		adc r17,r19
+ 334 0134 F801      		movw r30,r16
+ 335 0136 E80F      		add r30,r24
+ 336 0138 F91F      		adc r31,r25
+ 337 013a 8081      		ld r24,Z
+ 338               	.LVL25:
+ 339               	/* epilogue start */
+ 136:ex3.c         **** }
+ 340               		.loc 1 136 0
+ 341 013c 6096      		adiw r28,16
+ 342 013e 0FB6      		in __tmp_reg__,__SREG__
+ 343 0140 F894      		cli
+ 344 0142 DEBF      		out __SP_H__,r29
+ 345 0144 0FBE      		out __SREG__,__tmp_reg__
+ 346 0146 CDBF      		out __SP_L__,r28
+ 347 0148 DF91      		pop r29
+ 348 014a CF91      		pop r28
+ 349 014c 1F91      		pop r17
+ 350 014e 0F91      		pop r16
+ 351 0150 0895      		ret
+ 352               	.LVL26:
+ 353               	.L12:
+  83:ex3.c         ****         }
+ 354               		.loc 1 83 0
+ 355 0152 03E0      		ldi r16,lo8(3)
+ 356 0154 10E0      		ldi r17,0
+ 357 0156 00C0      		rjmp .L11
+ 358               	.L13:
+  87:ex3.c         ****         }
+ 359               		.loc 1 87 0
+ 360 0158 02E0      		ldi r16,lo8(2)
+ 361 015a 10E0      		ldi r17,0
+ 362 015c 00C0      		rjmp .L11
+ 363               	.L14:
+  91:ex3.c         ****         }
+ 364               		.loc 1 91 0
+ 365 015e 01E0      		ldi r16,lo8(1)
+ 366 0160 10E0      		ldi r17,0
+ 367               	.LVL27:
+ 368 0162 00C0      		rjmp .L11
+ 369               		.cfi_endproc
+ 370               	.LFE13:
+ 372               	.global	EEPROMwrite
+ 374               	EEPROMwrite:
+ 375               	.LFB14:
+ 137:ex3.c         **** 
+ 138:ex3.c         **** void EEPROMwrite(unsigned int address, char data)
+ 139:ex3.c         **** {
+ 376               		.loc 1 139 0
+ 377               		.cfi_startproc
+ 378               	/* prologue: function */
+ 379               	/* frame size = 0 */
+ 380               	/* stack size = 0 */
+ 381               	.L__stack_usage = 0
+ 382               	.LVL28:
+ 383               	.L27:
+ 140:ex3.c         ****     // wait for completion of previous write
+ 141:ex3.c         ****     while (EECR & (1 << EEPE))
+ 384               		.loc 1 141 0 discriminator 1
+ 385 0164 F999      		sbic 0x1f,1
+ 386 0166 00C0      		rjmp .L27
+ 142:ex3.c         ****         ;
+ 143:ex3.c         **** 
+ 144:ex3.c         ****     EEAR = address;
+ 387               		.loc 1 144 0
+ 388 0168 92BD      		out 0x21+1,r25
+ 389 016a 81BD      		out 0x21,r24
+ 145:ex3.c         ****     EEDR = data;
+ 390               		.loc 1 145 0
+ 391 016c 60BD      		out 0x20,r22
+ 146:ex3.c         **** 
+ 147:ex3.c         ****     // write logical one to EEMPE
+ 148:ex3.c         ****     EECR |= (1 << EEMPE);
+ 392               		.loc 1 148 0
+ 393 016e FA9A      		sbi 0x1f,2
+ 149:ex3.c         **** 
+ 150:ex3.c         ****     // start eeprom write by setting EEPE
+ 151:ex3.c         ****     EECR |= (1 << EEPE);
+ 394               		.loc 1 151 0
+ 395 0170 F99A      		sbi 0x1f,1
+ 396 0172 0895      		ret
+ 397               		.cfi_endproc
+ 398               	.LFE14:
+ 400               	.global	EEPROMwriteString
+ 402               	EEPROMwriteString:
+ 403               	.LFB15:
+ 152:ex3.c         **** }
+ 153:ex3.c         **** 
+ 154:ex3.c         **** void EEPROMwriteString(unsigned int address, char *sen)
+ 155:ex3.c         **** {
+ 404               		.loc 1 155 0
+ 405               		.cfi_startproc
+ 406               	.LVL29:
+ 407 0174 EF92      		push r14
+ 408               	.LCFI6:
+ 409               		.cfi_def_cfa_offset 3
+ 410               		.cfi_offset 14, -2
+ 411 0176 FF92      		push r15
+ 412               	.LCFI7:
+ 413               		.cfi_def_cfa_offset 4
+ 414               		.cfi_offset 15, -3
+ 415 0178 0F93      		push r16
+ 416               	.LCFI8:
+ 417               		.cfi_def_cfa_offset 5
+ 418               		.cfi_offset 16, -4
+ 419 017a 1F93      		push r17
+ 420               	.LCFI9:
+ 421               		.cfi_def_cfa_offset 6
+ 422               		.cfi_offset 17, -5
+ 423 017c CF93      		push r28
+ 424               	.LCFI10:
+ 425               		.cfi_def_cfa_offset 7
+ 426               		.cfi_offset 28, -6
+ 427 017e DF93      		push r29
+ 428               	.LCFI11:
+ 429               		.cfi_def_cfa_offset 8
+ 430               		.cfi_offset 29, -7
+ 431               	/* prologue: function */
+ 432               	/* frame size = 0 */
+ 433               	/* stack size = 6 */
+ 434               	.L__stack_usage = 6
+ 435 0180 7C01      		movw r14,r24
+ 436 0182 8B01      		movw r16,r22
+ 437               	.LVL30:
+ 156:ex3.c         ****     int i = 0;
+ 438               		.loc 1 156 0
+ 439 0184 C0E0      		ldi r28,0
+ 440 0186 D0E0      		ldi r29,0
+ 441               	.LVL31:
+ 442               	.L30:
+ 157:ex3.c         ****     while (sen[i] != '\0')
+ 443               		.loc 1 157 0
+ 444 0188 F801      		movw r30,r16
+ 445 018a 6191      		ld r22,Z+
+ 446 018c 8F01      		movw r16,r30
+ 447 018e CE01      		movw r24,r28
+ 448 0190 8E0D      		add r24,r14
+ 449 0192 9F1D      		adc r25,r15
+ 450 0194 6623      		tst r22
+ 451 0196 01F0      		breq .L32
+ 158:ex3.c         ****     {
+ 159:ex3.c         ****         EEPROMwrite(address + i, sen[i]);
+ 452               		.loc 1 159 0
+ 453 0198 0E94 0000 		call EEPROMwrite
+ 454               	.LVL32:
+ 160:ex3.c         ****         i++;
+ 455               		.loc 1 160 0
+ 456 019c 2196      		adiw r28,1
+ 457               	.LVL33:
+ 458 019e 00C0      		rjmp .L30
+ 459               	.L32:
+ 460               	/* epilogue start */
+ 161:ex3.c         ****     }
+ 162:ex3.c         ****     EEPROMwrite(address + i, '\0');
+ 163:ex3.c         **** }
+ 461               		.loc 1 163 0
+ 462 01a0 DF91      		pop r29
+ 463 01a2 CF91      		pop r28
+ 464               	.LVL34:
+ 465 01a4 1F91      		pop r17
+ 466 01a6 0F91      		pop r16
+ 467 01a8 FF90      		pop r15
+ 468 01aa EF90      		pop r14
+ 469               	.LVL35:
+ 162:ex3.c         **** }
+ 470               		.loc 1 162 0
+ 471 01ac 0C94 0000 		jmp EEPROMwrite
+ 472               	.LVL36:
+ 473               		.cfi_endproc
+ 474               	.LFE15:
+ 476               	.global	EEPROMread
+ 478               	EEPROMread:
+ 479               	.LFB16:
+ 164:ex3.c         **** 
+ 165:ex3.c         **** char EEPROMread(unsigned int address)
+ 166:ex3.c         **** {
+ 480               		.loc 1 166 0
+ 481               		.cfi_startproc
+ 482               	/* prologue: function */
+ 483               	/* frame size = 0 */
+ 484               	/* stack size = 0 */
+ 485               	.L__stack_usage = 0
+ 486               	.LVL37:
+ 487               	.L34:
+ 167:ex3.c         **** 
+ 168:ex3.c         ****     while (EECR & (1 << EEPE))
+ 488               		.loc 1 168 0 discriminator 1
+ 489 01b0 F999      		sbic 0x1f,1
+ 490 01b2 00C0      		rjmp .L34
+ 169:ex3.c         ****         ;
+ 170:ex3.c         **** 
+ 171:ex3.c         ****     EEAR = address;
+ 491               		.loc 1 171 0
+ 492 01b4 92BD      		out 0x21+1,r25
+ 493 01b6 81BD      		out 0x21,r24
+ 172:ex3.c         **** 
+ 173:ex3.c         ****     EECR |= (1 << EERE);
+ 494               		.loc 1 173 0
+ 495 01b8 F89A      		sbi 0x1f,0
+ 174:ex3.c         **** 
+ 175:ex3.c         ****     return EEDR;
+ 496               		.loc 1 175 0
+ 497 01ba 80B5      		in r24,0x20
+ 498               	.LVL38:
+ 176:ex3.c         **** }
+ 499               		.loc 1 176 0
+ 500 01bc 0895      		ret
+ 501               		.cfi_endproc
+ 502               	.LFE16:
+ 504               	.global	EEPROMreadString
+ 506               	EEPROMreadString:
+ 507               	.LFB17:
+ 177:ex3.c         **** 
+ 178:ex3.c         **** void EEPROMreadString(unsigned int address, char *sen)
+ 179:ex3.c         **** {
+ 508               		.loc 1 179 0
+ 509               		.cfi_startproc
+ 510               	.LVL39:
+ 511 01be EF92      		push r14
+ 512               	.LCFI12:
+ 513               		.cfi_def_cfa_offset 3
+ 514               		.cfi_offset 14, -2
+ 515 01c0 FF92      		push r15
+ 516               	.LCFI13:
+ 517               		.cfi_def_cfa_offset 4
+ 518               		.cfi_offset 15, -3
+ 519 01c2 0F93      		push r16
+ 520               	.LCFI14:
+ 521               		.cfi_def_cfa_offset 5
+ 522               		.cfi_offset 16, -4
+ 523 01c4 1F93      		push r17
+ 524               	.LCFI15:
+ 525               		.cfi_def_cfa_offset 6
+ 526               		.cfi_offset 17, -5
+ 527 01c6 CF93      		push r28
+ 528               	.LCFI16:
+ 529               		.cfi_def_cfa_offset 7
+ 530               		.cfi_offset 28, -6
+ 531 01c8 DF93      		push r29
+ 532               	.LCFI17:
+ 533               		.cfi_def_cfa_offset 8
+ 534               		.cfi_offset 29, -7
+ 535               	/* prologue: function */
+ 536               	/* frame size = 0 */
+ 537               	/* stack size = 6 */
+ 538               	.L__stack_usage = 6
+ 539 01ca 8C01      		movw r16,r24
+ 540 01cc 7B01      		movw r14,r22
+ 541               	.LVL40:
+ 180:ex3.c         ****     int i = 0;
+ 181:ex3.c         ****     char c = EEPROMread(address + i);
+ 542               		.loc 1 181 0
+ 543 01ce 0E94 0000 		call EEPROMread
+ 544               	.LVL41:
+ 182:ex3.c         ****     sen[i] = c;
+ 545               		.loc 1 182 0
+ 546 01d2 E701      		movw r28,r14
+ 547 01d4 8993      		st Y+,r24
+ 183:ex3.c         **** 
+ 184:ex3.c         ****     while (c != '\0')
+ 185:ex3.c         ****     {
+ 186:ex3.c         **** 
+ 187:ex3.c         ****         i++;
+ 188:ex3.c         ****         c = EEPROMread(address + i);
+ 548               		.loc 1 188 0
+ 549 01d6 0E19      		sub r16,r14
+ 550 01d8 1F09      		sbc r17,r15
+ 551               	.LVL42:
+ 552               	.L37:
+ 184:ex3.c         ****     {
+ 553               		.loc 1 184 0
+ 554 01da 8823      		tst r24
+ 555 01dc 01F0      		breq .L39
+ 556               	.LVL43:
+ 557               		.loc 1 188 0
+ 558 01de C801      		movw r24,r16
+ 559               	.LVL44:
+ 560 01e0 8C0F      		add r24,r28
+ 561 01e2 9D1F      		adc r25,r29
+ 562 01e4 0E94 0000 		call EEPROMread
+ 563               	.LVL45:
+ 189:ex3.c         ****         sen[i] = c;
+ 564               		.loc 1 189 0
+ 565 01e8 8993      		st Y+,r24
+ 566               	.LVL46:
+ 567 01ea 00C0      		rjmp .L37
+ 568               	.L39:
+ 569               	/* epilogue start */
+ 190:ex3.c         ****     }
+ 191:ex3.c         **** }
+ 570               		.loc 1 191 0
+ 571 01ec DF91      		pop r29
+ 572 01ee CF91      		pop r28
+ 573               	.LVL47:
+ 574 01f0 1F91      		pop r17
+ 575 01f2 0F91      		pop r16
+ 576 01f4 FF90      		pop r15
+ 577 01f6 EF90      		pop r14
+ 578               	.LVL48:
+ 579 01f8 0895      		ret
+ 580               		.cfi_endproc
+ 581               	.LFE17:
+ 583               		.section	.rodata.str1.1,"aMS",@progbits,1
+ 584               	.LC1:
+ 585 0000 5072 6573 		.string	"Press 1 or 2\n"
+ 585      7320 3120 
+ 585      6F72 2032 
+ 585      0A00 
+ 586               	.LC2:
+ 587 000e 2845 6E63 		.string	"(Encrypt/Key)\n"
+ 587      7279 7074 
+ 587      2F4B 6579 
+ 587      290A 00
+ 588               	.LC3:
+ 589 001d 5072 6F63 		.string	"Processing...\n"
+ 589      6573 7369 
+ 589      6E67 2E2E 
+ 589      2E0A 00
+ 590               	.LC4:
+ 591 002c 436F 6E74 		.string	"Continue - #\n"
+ 591      696E 7565 
+ 591      202D 2023 
+ 591      0A00 
+ 592               	.LC5:
+ 593 003a 456E 7465 		.string	"Enter the Key\n"
+ 593      7220 7468 
+ 593      6520 4B65 
+ 593      790A 00
+ 594               	.LC6:
+ 595 0049 4B65 7920 		.string	"Key is Saved!!!\n"
+ 595      6973 2053 
+ 595      6176 6564 
+ 595      2121 210A 
+ 595      00
+ 596               		.section	.text.startup,"ax",@progbits
+ 597               	.global	main
+ 599               	main:
+ 600               	.LFB18:
+ 192:ex3.c         **** 
+ 193:ex3.c         **** int main(void)
+ 194:ex3.c         **** {
+ 601               		.loc 1 194 0
+ 602               		.cfi_startproc
+ 603               	/* prologue: function */
+ 604               	/* frame size = 0 */
+ 605               	/* stack size = 0 */
+ 606               	.L__stack_usage = 0
+ 195:ex3.c         **** 
+ 196:ex3.c         ****     /* initialize display, cursor off */
+ 197:ex3.c         ****     lcd_init(LCD_DISP_ON);
+ 607               		.loc 1 197 0
+ 608 0000 8CE0      		ldi r24,lo8(12)
+ 609 0002 0E94 0000 		call lcd_init
+ 610               	.LVL49:
+ 611               	.L41:
+ 198:ex3.c         ****     int row, col;
+ 199:ex3.c         **** 
+ 200:ex3.c         ****     while (1)
+ 201:ex3.c         ****     {
+ 202:ex3.c         ****         /* clear display and home cursor */
+ 203:ex3.c         ****         lcd_clrscr();
+ 612               		.loc 1 203 0
+ 613 0006 0E94 0000 		call lcd_clrscr
+ 614               	.LVL50:
+ 204:ex3.c         **** 
+ 205:ex3.c         ****         // need to encryp or change the key
+ 206:ex3.c         ****         lcd_gotoxy(0, 0);
+ 615               		.loc 1 206 0
+ 616 000a 60E0      		ldi r22,0
+ 617 000c 80E0      		ldi r24,0
+ 618 000e 0E94 0000 		call lcd_gotoxy
+ 619               	.LVL51:
+ 207:ex3.c         ****         lcd_puts("Press 1 or 2\n");
+ 620               		.loc 1 207 0
+ 621 0012 80E0      		ldi r24,lo8(.LC1)
+ 622 0014 90E0      		ldi r25,hi8(.LC1)
+ 623 0016 0E94 0000 		call lcd_puts
+ 624               	.LVL52:
+ 208:ex3.c         ****         lcd_gotoxy(0, 1);
+ 625               		.loc 1 208 0
+ 626 001a 61E0      		ldi r22,lo8(1)
+ 627 001c 80E0      		ldi r24,0
+ 628 001e 0E94 0000 		call lcd_gotoxy
+ 629               	.LVL53:
+ 209:ex3.c         ****         lcd_puts("(Encrypt/Key)\n");
+ 630               		.loc 1 209 0
+ 631 0022 80E0      		ldi r24,lo8(.LC2)
+ 632 0024 90E0      		ldi r25,hi8(.LC2)
+ 633 0026 0E94 0000 		call lcd_puts
+ 634               	.LVL54:
+ 635               	.LBB48:
+ 636               	.LBB49:
+ 637               		.loc 2 187 0
+ 638 002a 2FEF      		ldi r18,lo8(15999999)
+ 639 002c 83E2      		ldi r24,hi8(15999999)
+ 640 002e 94EF      		ldi r25,hlo8(15999999)
+ 641 0030 2150      	1:	subi r18,1
+ 642 0032 8040      		sbci r24,0
+ 643 0034 9040      		sbci r25,0
+ 644 0036 01F4      		brne 1b
+ 645 0038 00C0      		rjmp .
+ 646 003a 0000      		nop
+ 647               	.LVL55:
+ 648               	.LBE49:
+ 649               	.LBE48:
+ 210:ex3.c         **** 
+ 211:ex3.c         ****         // wait for user input
+ 212:ex3.c         **** 
+ 213:ex3.c         ****         _delay_ms(5000);
+ 214:ex3.c         ****         lcd_clrscr();
+ 650               		.loc 1 214 0
+ 651 003c 0E94 0000 		call lcd_clrscr
+ 652               	.LVL56:
+ 215:ex3.c         **** 
+ 216:ex3.c         ****         if (input == '1')
+ 653               		.loc 1 216 0
+ 654 0040 8091 0000 		lds r24,input
+ 655 0044 8133      		cpi r24,lo8(49)
+ 656 0046 01F0      		breq .+2
+ 657 0048 00C0      		rjmp .L42
+ 658 004a 00E0      		ldi r16,lo8(buffer)
+ 659 004c 10E0      		ldi r17,hi8(buffer)
+ 660 004e C1E0      		ldi r28,lo8(1)
+ 661               	.L43:
+ 662               	.LVL57:
+ 663               	.LBB50:
+ 217:ex3.c         ****         {
+ 218:ex3.c         ****             row = 0;
+ 219:ex3.c         ****             col = 0;
+ 220:ex3.c         ****             for (int i = 0; i < SIZE; i++)
+ 221:ex3.c         ****             {
+ 222:ex3.c         ****                 // wait for user input
+ 223:ex3.c         **** 
+ 224:ex3.c         ****                 /* write single char to display */
+ 225:ex3.c         ****                 lcd_putc(buffer[i]);
+ 664               		.loc 1 225 0 discriminator 3
+ 665 0050 F801      		movw r30,r16
+ 666 0052 8191      		ld r24,Z+
+ 667 0054 8F01      		movw r16,r30
+ 668               	.LVL58:
+ 669 0056 0E94 0000 		call lcd_putc
+ 670               	.LVL59:
+ 671               	.LBB51:
+ 672               	.LBB52:
+ 673               		.loc 2 187 0 discriminator 3
+ 674 005a FFEF      		ldi r31,lo8(3199999)
+ 675 005c 23ED      		ldi r18,hi8(3199999)
+ 676 005e 80E3      		ldi r24,hlo8(3199999)
+ 677 0060 F150      	1:	subi r31,1
+ 678 0062 2040      		sbci r18,0
+ 679 0064 8040      		sbci r24,0
+ 680 0066 01F4      		brne 1b
+ 681 0068 00C0      		rjmp .
+ 682 006a 0000      		nop
+ 683               	.LVL60:
+ 684               	.LBE52:
+ 685               	.LBE51:
+ 226:ex3.c         **** 
+ 227:ex3.c         ****                 _delay_ms(1000);
+ 228:ex3.c         **** 
+ 229:ex3.c         ****                 col++;
+ 230:ex3.c         ****                 lcd_gotoxy(col, row);
+ 686               		.loc 1 230 0 discriminator 3
+ 687 006c 60E0      		ldi r22,0
+ 688 006e 8C2F      		mov r24,r28
+ 689 0070 0E94 0000 		call lcd_gotoxy
+ 690               	.LVL61:
+ 691 0074 CF5F      		subi r28,lo8(-(1))
+ 220:ex3.c         ****             {
+ 692               		.loc 1 220 0 discriminator 3
+ 693 0076 CB30      		cpi r28,lo8(11)
+ 694 0078 01F4      		brne .L43
+ 695               	.LVL62:
+ 696               	.LBE50:
+ 697               	.LBB53:
+ 698               	.LBB54:
+ 699               		.loc 2 187 0
+ 700 007a 9FEF      		ldi r25,lo8(3199999)
+ 701 007c E3ED      		ldi r30,hi8(3199999)
+ 702 007e F0E3      		ldi r31,hlo8(3199999)
+ 703 0080 9150      	1:	subi r25,1
+ 704 0082 E040      		sbci r30,0
+ 705 0084 F040      		sbci r31,0
+ 706 0086 01F4      		brne 1b
+ 707 0088 00C0      		rjmp .
+ 708 008a 0000      		nop
+ 709               	.LVL63:
+ 710               	.LBE54:
+ 711               	.LBE53:
+ 231:ex3.c         ****             }
+ 232:ex3.c         **** 
+ 233:ex3.c         ****             _delay_ms(1000);
+ 234:ex3.c         ****             lcd_clrscr();
+ 712               		.loc 1 234 0
+ 713 008c 0E94 0000 		call lcd_clrscr
+ 714               	.LVL64:
+ 235:ex3.c         ****             buffer[SIZE] = '\0';
+ 715               		.loc 1 235 0
+ 716 0090 1092 0000 		sts buffer+10,__zero_reg__
+ 236:ex3.c         **** 
+ 237:ex3.c         ****             lcd_puts("Processing...\n");
+ 717               		.loc 1 237 0
+ 718 0094 80E0      		ldi r24,lo8(.LC3)
+ 719 0096 90E0      		ldi r25,hi8(.LC3)
+ 720 0098 0E94 0000 		call lcd_puts
+ 721               	.LVL65:
+ 722               	.LBB55:
+ 723               	.LBB56:
+ 724               		.loc 2 187 0
+ 725 009c 2FEF      		ldi r18,lo8(3199999)
+ 726 009e 83ED      		ldi r24,hi8(3199999)
+ 727 00a0 90E3      		ldi r25,hlo8(3199999)
+ 728 00a2 2150      	1:	subi r18,1
+ 729 00a4 8040      		sbci r24,0
+ 730 00a6 9040      		sbci r25,0
+ 731 00a8 01F4      		brne 1b
+ 732 00aa 00C0      		rjmp .
+ 733 00ac 0000      		nop
+ 734               	.LVL66:
+ 735               	.LBE56:
+ 736               	.LBE55:
+ 238:ex3.c         ****             _delay_ms(1000);
+ 239:ex3.c         ****             lcd_clrscr();
+ 737               		.loc 1 239 0
+ 738 00ae 0E94 0000 		call lcd_clrscr
+ 739               	.LVL67:
+ 240:ex3.c         **** 
+ 241:ex3.c         ****             lcd_puts(buffer);
+ 740               		.loc 1 241 0
+ 741 00b2 80E0      		ldi r24,lo8(buffer)
+ 742 00b4 90E0      		ldi r25,hi8(buffer)
+ 743 00b6 0E94 0000 		call lcd_puts
+ 744               	.LVL68:
+ 242:ex3.c         **** 
+ 243:ex3.c         ****             lcd_gotoxy(0, 1);
+ 745               		.loc 1 243 0
+ 746 00ba 61E0      		ldi r22,lo8(1)
+ 747 00bc 80E0      		ldi r24,0
+ 748 00be 0E94 0000 		call lcd_gotoxy
+ 749               	.LVL69:
+ 244:ex3.c         ****             lcd_puts("Continue - #\n");
+ 750               		.loc 1 244 0
+ 751 00c2 80E0      		ldi r24,lo8(.LC4)
+ 752 00c4 90E0      		ldi r25,hi8(.LC4)
+ 753 00c6 0E94 0000 		call lcd_puts
+ 754               	.LVL70:
+ 755               	.LBB57:
+ 756               	.LBB58:
+ 757               		.loc 2 187 0
+ 758 00ca EFEF      		ldi r30,lo8(15999999)
+ 759 00cc F3E2      		ldi r31,hi8(15999999)
+ 760 00ce 24EF      		ldi r18,hlo8(15999999)
+ 761 00d0 E150      	1:	subi r30,1
+ 762 00d2 F040      		sbci r31,0
+ 763 00d4 2040      		sbci r18,0
+ 764 00d6 01F4      		brne 1b
+ 765 00d8 00C0      		rjmp .
+ 766 00da 0000      		nop
+ 767               	.LVL71:
+ 768               	.LBE58:
+ 769               	.LBE57:
+ 245:ex3.c         **** 
+ 246:ex3.c         ****             // wait for user input
+ 247:ex3.c         **** 
+ 248:ex3.c         ****             _delay_ms(5000);
+ 249:ex3.c         **** 
+ 250:ex3.c         ****             lcd_clrscr();
+ 770               		.loc 1 250 0
+ 771 00dc 0E94 0000 		call lcd_clrscr
+ 772               	.LVL72:
+ 773 00e0 00C0      		rjmp .L41
+ 774               	.LVL73:
+ 775               	.L42:
+ 776               	.LBB59:
+ 251:ex3.c         ****         }
+ 252:ex3.c         ****         else
+ 253:ex3.c         ****         {
+ 254:ex3.c         ****             lcd_gotoxy(0, 0);
+ 777               		.loc 1 254 0
+ 778 00e2 60E0      		ldi r22,0
+ 779 00e4 80E0      		ldi r24,0
+ 780 00e6 0E94 0000 		call lcd_gotoxy
+ 781               	.LVL74:
+ 255:ex3.c         ****             lcd_puts("Enter the Key\n");
+ 782               		.loc 1 255 0
+ 783 00ea 80E0      		ldi r24,lo8(.LC5)
+ 784 00ec 90E0      		ldi r25,hi8(.LC5)
+ 785 00ee 0E94 0000 		call lcd_puts
+ 786               	.LVL75:
+ 256:ex3.c         **** 
+ 257:ex3.c         ****             row = 0;
+ 258:ex3.c         ****             col = 0;
+ 259:ex3.c         ****             int len = 0;
+ 260:ex3.c         **** 
+ 261:ex3.c         ****             lcd_gotoxy(0, 1);
+ 787               		.loc 1 261 0
+ 788 00f2 61E0      		ldi r22,lo8(1)
+ 789 00f4 80E0      		ldi r24,0
+ 790 00f6 0E94 0000 		call lcd_gotoxy
+ 791               	.LVL76:
+ 792 00fa 00E0      		ldi r16,lo8(buffer)
+ 793 00fc 10E0      		ldi r17,hi8(buffer)
+ 794 00fe C1E0      		ldi r28,lo8(1)
+ 795               	.LVL77:
+ 796               	.L46:
+ 262:ex3.c         ****             row++;
+ 263:ex3.c         ****             for (;;)
+ 264:ex3.c         ****             {
+ 265:ex3.c         ****                 // wait for user input
+ 266:ex3.c         **** 
+ 267:ex3.c         ****                 /* write single char to display */
+ 268:ex3.c         ****                 lcd_putc(buffer[len]);
+ 797               		.loc 1 268 0
+ 798 0100 F801      		movw r30,r16
+ 799 0102 8191      		ld r24,Z+
+ 800 0104 8F01      		movw r16,r30
+ 801               	.LVL78:
+ 802 0106 0E94 0000 		call lcd_putc
+ 803               	.LVL79:
+ 804               	.LBB60:
+ 805               	.LBB61:
+ 806               		.loc 2 187 0
+ 807 010a FFEF      		ldi r31,lo8(3199999)
+ 808 010c 23ED      		ldi r18,hi8(3199999)
+ 809 010e 80E3      		ldi r24,hlo8(3199999)
+ 810 0110 F150      	1:	subi r31,1
+ 811 0112 2040      		sbci r18,0
+ 812 0114 8040      		sbci r24,0
+ 813 0116 01F4      		brne 1b
+ 814 0118 00C0      		rjmp .
+ 815 011a 0000      		nop
+ 816               	.LVL80:
+ 817               	.LBE61:
+ 818               	.LBE60:
+ 269:ex3.c         **** 
+ 270:ex3.c         ****                 _delay_ms(1000);
+ 271:ex3.c         **** 
+ 272:ex3.c         ****                 len++;
+ 273:ex3.c         **** 
+ 274:ex3.c         ****                 if (buffer[len] == '0')
+ 819               		.loc 1 274 0
+ 820 011c F801      		movw r30,r16
+ 821 011e 8081      		ld r24,Z
+ 822 0120 8033      		cpi r24,lo8(48)
+ 823 0122 01F0      		breq .L45
+ 824               	.LVL81:
+ 275:ex3.c         ****                     break;
+ 276:ex3.c         **** 
+ 277:ex3.c         ****                 col++;
+ 278:ex3.c         ****                 lcd_gotoxy(col, row);
+ 825               		.loc 1 278 0
+ 826 0124 61E0      		ldi r22,lo8(1)
+ 827 0126 8C2F      		mov r24,r28
+ 828 0128 0E94 0000 		call lcd_gotoxy
+ 829               	.LVL82:
+ 830 012c CF5F      		subi r28,lo8(-(1))
+ 279:ex3.c         ****             }
+ 831               		.loc 1 279 0
+ 832 012e 00C0      		rjmp .L46
+ 833               	.LVL83:
+ 834               	.L45:
+ 835               	.LBB62:
+ 836               	.LBB63:
+ 837               		.loc 2 187 0
+ 838 0130 FFEF      		ldi r31,lo8(3199999)
+ 839 0132 23ED      		ldi r18,hi8(3199999)
+ 840 0134 80E3      		ldi r24,hlo8(3199999)
+ 841 0136 F150      	1:	subi r31,1
+ 842 0138 2040      		sbci r18,0
+ 843 013a 8040      		sbci r24,0
+ 844 013c 01F4      		brne 1b
+ 845 013e 00C0      		rjmp .
+ 846 0140 0000      		nop
+ 847               	.LVL84:
+ 848               	.LBE63:
+ 849               	.LBE62:
+ 280:ex3.c         **** 
+ 281:ex3.c         ****             _delay_ms(1000);
+ 282:ex3.c         ****             lcd_clrscr();
+ 850               		.loc 1 282 0
+ 851 0142 0E94 0000 		call lcd_clrscr
+ 852               	.LVL85:
+ 283:ex3.c         ****             buffer[SIZE] = '\0';
+ 853               		.loc 1 283 0
+ 854 0146 1092 0000 		sts buffer+10,__zero_reg__
+ 284:ex3.c         **** 
+ 285:ex3.c         ****             lcd_gotoxy(0, 0);
+ 855               		.loc 1 285 0
+ 856 014a 60E0      		ldi r22,0
+ 857 014c 80E0      		ldi r24,0
+ 858 014e 0E94 0000 		call lcd_gotoxy
+ 859               	.LVL86:
+ 286:ex3.c         ****             lcd_puts("Key is Saved!!!\n");
+ 860               		.loc 1 286 0
+ 861 0152 80E0      		ldi r24,lo8(.LC6)
+ 862 0154 90E0      		ldi r25,hi8(.LC6)
+ 863 0156 0E94 0000 		call lcd_puts
+ 864               	.LVL87:
+ 865               	.LBB64:
+ 866               	.LBB65:
+ 867               		.loc 2 187 0
+ 868 015a 9FEF      		ldi r25,lo8(12799999)
+ 869 015c EFE4      		ldi r30,hi8(12799999)
+ 870 015e F3EC      		ldi r31,hlo8(12799999)
+ 871 0160 9150      	1:	subi r25,1
+ 872 0162 E040      		sbci r30,0
+ 873 0164 F040      		sbci r31,0
+ 874 0166 01F4      		brne 1b
+ 875 0168 00C0      		rjmp .
+ 876 016a 0000      		nop
+ 877 016c 00C0      		rjmp .L41
+ 878               	.LBE65:
+ 879               	.LBE64:
+ 880               	.LBE59:
+ 881               		.cfi_endproc
+ 882               	.LFE18:
+ 884               	.global	input
+ 885               		.data
+ 888               	input:
+ 889 0000 32        		.byte	50
+ 890               		.comm	key,2,1
+ 891               	.global	buffer
+ 894               	buffer:
+ 895 0001 3132 3334 		.string	"1234567890"
+ 895      3536 3738 
+ 895      3930 00
+ 896               		.text
+ 897               	.Letext0:
+ 898               		.file 3 "/usr/lib/avr/include/stdint.h"
+ 899               		.file 4 "lcd.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 ex3.c
+               ex3.s:2      *ABS*:000000000000003e __SP_H__
+               ex3.s:3      *ABS*:000000000000003d __SP_L__
+               ex3.s:4      *ABS*:000000000000003f __SREG__
+               ex3.s:5      *ABS*:0000000000000000 __tmp_reg__
+               ex3.s:6      *ABS*:0000000000000001 __zero_reg__
+               ex3.s:12     .text:0000000000000000 columnOutRowIn
+               ex3.s:65     .text:0000000000000032 columnInRowOut
+               ex3.s:135    .text:0000000000000064 getKeyPad
+               ex3.s:374    .text:0000000000000164 EEPROMwrite
+               ex3.s:402    .text:0000000000000174 EEPROMwriteString
+               ex3.s:478    .text:00000000000001b0 EEPROMread
+               ex3.s:506    .text:00000000000001be EEPROMreadString
+               ex3.s:599    .text.startup:0000000000000000 main
+               ex3.s:888    .data:0000000000000000 input
+               ex3.s:894    .data:0000000000000001 buffer
+                            *COM*:0000000000000002 key
+
+UNDEFINED SYMBOLS
+lcd_init
+lcd_clrscr
+lcd_gotoxy
+lcd_puts
+lcd_putc
+__do_copy_data
+__do_clear_bss

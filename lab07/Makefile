@@ -34,7 +34,7 @@ F_CPU = 16000000
 
 
 # Target file name (without extension).
-TARGET =  test_lcd
+TARGET =  ex3
 
 
 # List C source files here. (C dependencies are automatically generated.)
