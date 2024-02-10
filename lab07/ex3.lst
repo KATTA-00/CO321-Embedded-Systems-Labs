@@ -81,8 +81,8 @@
   43 0020 806C      		ori r24,lo8(-64)
   44 0022 8BB9      		out 0xb,r24
   45               	.LVL0:
-  46               	.LBB34:
-  47               	.LBB35:
+  46               	.LBB23:
+  47               	.LBB24:
   48               		.file 2 "/usr/lib/avr/include/util/delay.h"
    1:/usr/lib/avr/include/util/delay.h **** /* Copyright (c) 2002, Marek Michalkiewicz
    2:/usr/lib/avr/include/util/delay.h ****    Copyright (c) 2004,2005,2007 Joerg Wunsch
@@ -280,8 +280,8 @@
   55 002e 0000      		nop
   56               	.LVL1:
   57 0030 0895      		ret
-  58               	.LBE35:
-  59               	.LBE34:
+  58               	.LBE24:
+  59               	.LBE23:
   60               		.cfi_endproc
   61               	.LFE11:
   63               	.global	columnInRowOut
@@ -337,8 +337,8 @@
   95 0052 8F73      		andi r24,lo8(63)
   96 0054 8BB9      		out 0xb,r24
   97               	.LVL2:
-  98               	.LBB36:
-  99               	.LBB37:
+  98               	.LBB25:
+  99               	.LBB26:
  100               		.loc 2 187 0
  101 0056 8FE3      		ldi r24,lo8(-25537)
  102 0058 9CE9      		ldi r25,hi8(-25537)
@@ -348,8 +348,8 @@
  106 0060 0000      		nop
  107               	.LVL3:
  108 0062 0895      		ret
- 109               	.LBE37:
- 110               	.LBE36:
+ 109               	.LBE26:
+ 110               	.LBE25:
  111               		.cfi_endproc
  112               	.LFE12:
  114               		.section	.rodata
@@ -430,8 +430,8 @@
  181 008a 8A95      		dec r24
  182 008c 01F4      		brne 0b
  183               	.LVL5:
- 184               	.LBB38:
- 185               	.LBB39:
+ 184               	.LBB27:
+ 185               	.LBB28:
  186               		.loc 2 187 0
  187 008e 8FE3      		ldi r24,lo8(-25537)
  188 0090 9CE9      		ldi r25,hi8(-25537)
@@ -440,8 +440,8 @@
  191 0096 00C0      		rjmp .
  192 0098 0000      		nop
  193               	.LVL6:
- 194               	.LBE39:
- 195               	.LBE38:
+ 194               	.LBE28:
+ 195               	.LBE27:
   68:ex3.c         ****         {'1', '2', '3', 'A'},
   69:ex3.c         ****         {'4', '5', '6', 'B'},
   70:ex3.c         ****         {'7', '8', '9', 'C'},
@@ -456,8 +456,8 @@
  197 009a 0E94 0000 		call columnOutRowIn
  198               	.LVL7:
  199               	.L5:
- 200               	.LBB40:
- 201               	.LBB41:
+ 200               	.LBB29:
+ 201               	.LBB30:
  202               		.loc 2 187 0
  203 009e 8FE3      		ldi r24,lo8(-25537)
  204 00a0 9CE9      		ldi r25,hi8(-25537)
@@ -466,8 +466,8 @@
  207 00a6 00C0      		rjmp .
  208 00a8 0000      		nop
  209               	.LVL8:
- 210               	.LBE41:
- 211               	.LBE40:
+ 210               	.LBE30:
+ 211               	.LBE29:
   78:ex3.c         ****     while (i == -1)
   79:ex3.c         ****     {
   80:ex3.c         ****         _delay_ms(10);
@@ -503,8 +503,8 @@
  227 00bc 10E0      		ldi r17,0
  228               	.L11:
  229               	.LVL10:
- 230               	.LBB42:
- 231               	.LBB43:
+ 230               	.LBB31:
+ 231               	.LBB32:
  232               		.loc 2 187 0
  233 00be 8FE3      		ldi r24,lo8(-25537)
  234 00c0 9CE9      		ldi r25,hi8(-25537)
@@ -513,8 +513,8 @@
  237 00c6 00C0      		rjmp .
  238 00c8 0000      		nop
  239               	.LVL11:
- 240               	.LBE43:
- 241               	.LBE42:
+ 240               	.LBE32:
+ 241               	.LBE31:
   94:ex3.c         ****         {
   95:ex3.c         ****             i = 0;
   96:ex3.c         ****         }
@@ -527,8 +527,8 @@
  243 00ca 0E94 0000 		call columnInRowOut
  244               	.LVL12:
  245               	.L10:
- 246               	.LBB44:
- 247               	.LBB45:
+ 246               	.LBB33:
+ 247               	.LBB34:
  248               		.loc 2 187 0
  249 00ce 8FE3      		ldi r24,lo8(-25537)
  250 00d0 9CE9      		ldi r25,hi8(-25537)
@@ -540,8 +540,8 @@
  256 00dc 9FEF      		ldi r25,lo8(-1)
  257               	.LVL13:
  258               	.L6:
- 259               	.LBE45:
- 260               	.LBE44:
+ 259               	.LBE34:
+ 260               	.LBE33:
  102:ex3.c         ****     while (j == -1)
  103:ex3.c         ****     {
  104:ex3.c         ****         _delay_ms(10);
@@ -607,8 +607,8 @@
  304 010a 9207      		cpc r25,r18
  305 010c 01F0      		breq .L10
  306               	.LVL22:
- 307               	.LBB46:
- 308               	.LBB47:
+ 307               	.LBB35:
+ 308               	.LBB36:
  309               		.loc 2 187 0
  310 010e 3FEF      		ldi r19,lo8(319999)
  311 0110 41EE      		ldi r20,hi8(319999)
@@ -620,8 +620,8 @@
  317 011c 00C0      		rjmp .
  318 011e 0000      		nop
  319               	.LVL23:
- 320               	.LBE47:
- 321               	.LBE46:
+ 320               	.LBE36:
+ 321               	.LBE35:
  120:ex3.c         ****         }
  121:ex3.c         ****     }
  122:ex3.c         **** 
@@ -968,17 +968,17 @@
  589      6E67 2E2E 
  589      2E0A 00
  590               	.LC4:
- 591 002c 436F 6E74 		.string	"Continue - #\n"
- 591      696E 7565 
- 591      202D 2023 
- 591      0A00 
+ 591 002c 5072 6573 		.string	"Press any Con\n"
+ 591      7320 616E 
+ 591      7920 436F 
+ 591      6E0A 00
  592               	.LC5:
- 593 003a 456E 7465 		.string	"Enter the Key\n"
+ 593 003b 456E 7465 		.string	"Enter the Key\n"
  593      7220 7468 
  593      6520 4B65 
  593      790A 00
  594               	.LC6:
- 595 0049 4B65 7920 		.string	"Key is Saved!!!\n"
+ 595 004a 4B65 7920 		.string	"Key is Saved!!!\n"
  595      6973 2053 
  595      6176 6564 
  595      2121 210A 
@@ -992,377 +992,396 @@
  194:ex3.c         **** {
  601               		.loc 1 194 0
  602               		.cfi_startproc
- 603               	/* prologue: function */
- 604               	/* frame size = 0 */
- 605               	/* stack size = 0 */
- 606               	.L__stack_usage = 0
+ 603 0000 CF93      		push r28
+ 604               	.LCFI18:
+ 605               		.cfi_def_cfa_offset 3
+ 606               		.cfi_offset 28, -2
+ 607 0002 DF93      		push r29
+ 608               	.LCFI19:
+ 609               		.cfi_def_cfa_offset 4
+ 610               		.cfi_offset 29, -3
+ 611 0004 CDB7      		in r28,__SP_L__
+ 612 0006 DEB7      		in r29,__SP_H__
+ 613               	.LCFI20:
+ 614               		.cfi_def_cfa_register 28
+ 615 0008 2B97      		sbiw r28,11
+ 616               	.LCFI21:
+ 617               		.cfi_def_cfa_offset 15
+ 618 000a 0FB6      		in __tmp_reg__,__SREG__
+ 619 000c F894      		cli
+ 620 000e DEBF      		out __SP_H__,r29
+ 621 0010 0FBE      		out __SREG__,__tmp_reg__
+ 622 0012 CDBF      		out __SP_L__,r28
+ 623               	/* prologue: function */
+ 624               	/* frame size = 11 */
+ 625               	/* stack size = 13 */
+ 626               	.L__stack_usage = 13
  195:ex3.c         **** 
  196:ex3.c         ****     /* initialize display, cursor off */
  197:ex3.c         ****     lcd_init(LCD_DISP_ON);
- 607               		.loc 1 197 0
- 608 0000 8CE0      		ldi r24,lo8(12)
- 609 0002 0E94 0000 		call lcd_init
- 610               	.LVL49:
- 611               	.L41:
+ 627               		.loc 1 197 0
+ 628 0014 8CE0      		ldi r24,lo8(12)
+ 629 0016 0E94 0000 		call lcd_init
+ 630               	.LVL49:
+ 631               	.L41:
  198:ex3.c         ****     int row, col;
  199:ex3.c         **** 
- 200:ex3.c         ****     while (1)
- 201:ex3.c         ****     {
- 202:ex3.c         ****         /* clear display and home cursor */
- 203:ex3.c         ****         lcd_clrscr();
- 612               		.loc 1 203 0
- 613 0006 0E94 0000 		call lcd_clrscr
- 614               	.LVL50:
- 204:ex3.c         **** 
- 205:ex3.c         ****         // need to encryp or change the key
- 206:ex3.c         ****         lcd_gotoxy(0, 0);
- 615               		.loc 1 206 0
- 616 000a 60E0      		ldi r22,0
- 617 000c 80E0      		ldi r24,0
- 618 000e 0E94 0000 		call lcd_gotoxy
- 619               	.LVL51:
- 207:ex3.c         ****         lcd_puts("Press 1 or 2\n");
- 620               		.loc 1 207 0
- 621 0012 80E0      		ldi r24,lo8(.LC1)
- 622 0014 90E0      		ldi r25,hi8(.LC1)
- 623 0016 0E94 0000 		call lcd_puts
- 624               	.LVL52:
- 208:ex3.c         ****         lcd_gotoxy(0, 1);
- 625               		.loc 1 208 0
- 626 001a 61E0      		ldi r22,lo8(1)
- 627 001c 80E0      		ldi r24,0
- 628 001e 0E94 0000 		call lcd_gotoxy
- 629               	.LVL53:
- 209:ex3.c         ****         lcd_puts("(Encrypt/Key)\n");
- 630               		.loc 1 209 0
- 631 0022 80E0      		ldi r24,lo8(.LC2)
- 632 0024 90E0      		ldi r25,hi8(.LC2)
- 633 0026 0E94 0000 		call lcd_puts
- 634               	.LVL54:
- 635               	.LBB48:
- 636               	.LBB49:
- 637               		.loc 2 187 0
- 638 002a 2FEF      		ldi r18,lo8(15999999)
- 639 002c 83E2      		ldi r24,hi8(15999999)
- 640 002e 94EF      		ldi r25,hlo8(15999999)
- 641 0030 2150      	1:	subi r18,1
- 642 0032 8040      		sbci r24,0
- 643 0034 9040      		sbci r25,0
- 644 0036 01F4      		brne 1b
- 645 0038 00C0      		rjmp .
- 646 003a 0000      		nop
- 647               	.LVL55:
- 648               	.LBE49:
- 649               	.LBE48:
- 210:ex3.c         **** 
- 211:ex3.c         ****         // wait for user input
+ 200:ex3.c         ****     char keyString[SIZE + 1];
+ 201:ex3.c         **** 
+ 202:ex3.c         ****     while (1)
+ 203:ex3.c         ****     {
+ 204:ex3.c         ****         /* clear display and home cursor */
+ 205:ex3.c         ****         lcd_clrscr();
+ 632               		.loc 1 205 0
+ 633 001a 0E94 0000 		call lcd_clrscr
+ 634               	.LVL50:
+ 206:ex3.c         **** 
+ 207:ex3.c         ****         // need to encryp or change the key
+ 208:ex3.c         ****         lcd_gotoxy(0, 0);
+ 635               		.loc 1 208 0
+ 636 001e 60E0      		ldi r22,0
+ 637 0020 80E0      		ldi r24,0
+ 638 0022 0E94 0000 		call lcd_gotoxy
+ 639               	.LVL51:
+ 209:ex3.c         ****         lcd_puts("Press 1 or 2\n");
+ 640               		.loc 1 209 0
+ 641 0026 80E0      		ldi r24,lo8(.LC1)
+ 642 0028 90E0      		ldi r25,hi8(.LC1)
+ 643 002a 0E94 0000 		call lcd_puts
+ 644               	.LVL52:
+ 210:ex3.c         ****         lcd_gotoxy(0, 1);
+ 645               		.loc 1 210 0
+ 646 002e 61E0      		ldi r22,lo8(1)
+ 647 0030 80E0      		ldi r24,0
+ 648 0032 0E94 0000 		call lcd_gotoxy
+ 649               	.LVL53:
+ 211:ex3.c         ****         lcd_puts("(Encrypt/Key)\n");
+ 650               		.loc 1 211 0
+ 651 0036 80E0      		ldi r24,lo8(.LC2)
+ 652 0038 90E0      		ldi r25,hi8(.LC2)
+ 653 003a 0E94 0000 		call lcd_puts
+ 654               	.LVL54:
  212:ex3.c         **** 
- 213:ex3.c         ****         _delay_ms(5000);
- 214:ex3.c         ****         lcd_clrscr();
- 650               		.loc 1 214 0
- 651 003c 0E94 0000 		call lcd_clrscr
- 652               	.LVL56:
+ 213:ex3.c         ****         // wait for user input
+ 214:ex3.c         ****         input = getKeyPad();
+ 655               		.loc 1 214 0
+ 656 003e 0E94 0000 		call getKeyPad
+ 657               	.LVL55:
+ 658 0042 8093 0000 		sts input,r24
  215:ex3.c         **** 
- 216:ex3.c         ****         if (input == '1')
- 653               		.loc 1 216 0
- 654 0040 8091 0000 		lds r24,input
- 655 0044 8133      		cpi r24,lo8(49)
- 656 0046 01F0      		breq .+2
- 657 0048 00C0      		rjmp .L42
- 658 004a 00E0      		ldi r16,lo8(buffer)
- 659 004c 10E0      		ldi r17,hi8(buffer)
- 660 004e C1E0      		ldi r28,lo8(1)
- 661               	.L43:
- 662               	.LVL57:
- 663               	.LBB50:
- 217:ex3.c         ****         {
- 218:ex3.c         ****             row = 0;
- 219:ex3.c         ****             col = 0;
- 220:ex3.c         ****             for (int i = 0; i < SIZE; i++)
- 221:ex3.c         ****             {
- 222:ex3.c         ****                 // wait for user input
- 223:ex3.c         **** 
- 224:ex3.c         ****                 /* write single char to display */
- 225:ex3.c         ****                 lcd_putc(buffer[i]);
- 664               		.loc 1 225 0 discriminator 3
- 665 0050 F801      		movw r30,r16
- 666 0052 8191      		ld r24,Z+
- 667 0054 8F01      		movw r16,r30
- 668               	.LVL58:
- 669 0056 0E94 0000 		call lcd_putc
- 670               	.LVL59:
- 671               	.LBB51:
- 672               	.LBB52:
- 673               		.loc 2 187 0 discriminator 3
- 674 005a FFEF      		ldi r31,lo8(3199999)
- 675 005c 23ED      		ldi r18,hi8(3199999)
- 676 005e 80E3      		ldi r24,hlo8(3199999)
- 677 0060 F150      	1:	subi r31,1
- 678 0062 2040      		sbci r18,0
- 679 0064 8040      		sbci r24,0
- 680 0066 01F4      		brne 1b
- 681 0068 00C0      		rjmp .
- 682 006a 0000      		nop
- 683               	.LVL60:
- 684               	.LBE52:
- 685               	.LBE51:
- 226:ex3.c         **** 
- 227:ex3.c         ****                 _delay_ms(1000);
- 228:ex3.c         **** 
- 229:ex3.c         ****                 col++;
- 230:ex3.c         ****                 lcd_gotoxy(col, row);
- 686               		.loc 1 230 0 discriminator 3
- 687 006c 60E0      		ldi r22,0
- 688 006e 8C2F      		mov r24,r28
- 689 0070 0E94 0000 		call lcd_gotoxy
- 690               	.LVL61:
- 691 0074 CF5F      		subi r28,lo8(-(1))
- 220:ex3.c         ****             {
- 692               		.loc 1 220 0 discriminator 3
- 693 0076 CB30      		cpi r28,lo8(11)
- 694 0078 01F4      		brne .L43
- 695               	.LVL62:
- 696               	.LBE50:
- 697               	.LBB53:
- 698               	.LBB54:
- 699               		.loc 2 187 0
- 700 007a 9FEF      		ldi r25,lo8(3199999)
- 701 007c E3ED      		ldi r30,hi8(3199999)
- 702 007e F0E3      		ldi r31,hlo8(3199999)
- 703 0080 9150      	1:	subi r25,1
- 704 0082 E040      		sbci r30,0
- 705 0084 F040      		sbci r31,0
- 706 0086 01F4      		brne 1b
- 707 0088 00C0      		rjmp .
- 708 008a 0000      		nop
- 709               	.LVL63:
- 710               	.LBE54:
- 711               	.LBE53:
- 231:ex3.c         ****             }
- 232:ex3.c         **** 
- 233:ex3.c         ****             _delay_ms(1000);
- 234:ex3.c         ****             lcd_clrscr();
- 712               		.loc 1 234 0
- 713 008c 0E94 0000 		call lcd_clrscr
- 714               	.LVL64:
- 235:ex3.c         ****             buffer[SIZE] = '\0';
- 715               		.loc 1 235 0
- 716 0090 1092 0000 		sts buffer+10,__zero_reg__
- 236:ex3.c         **** 
- 237:ex3.c         ****             lcd_puts("Processing...\n");
- 717               		.loc 1 237 0
- 718 0094 80E0      		ldi r24,lo8(.LC3)
- 719 0096 90E0      		ldi r25,hi8(.LC3)
- 720 0098 0E94 0000 		call lcd_puts
- 721               	.LVL65:
- 722               	.LBB55:
- 723               	.LBB56:
- 724               		.loc 2 187 0
- 725 009c 2FEF      		ldi r18,lo8(3199999)
- 726 009e 83ED      		ldi r24,hi8(3199999)
- 727 00a0 90E3      		ldi r25,hlo8(3199999)
- 728 00a2 2150      	1:	subi r18,1
- 729 00a4 8040      		sbci r24,0
- 730 00a6 9040      		sbci r25,0
- 731 00a8 01F4      		brne 1b
- 732 00aa 00C0      		rjmp .
- 733 00ac 0000      		nop
+ 216:ex3.c         ****         lcd_clrscr();
+ 659               		.loc 1 216 0
+ 660 0046 0E94 0000 		call lcd_clrscr
+ 661               	.LVL56:
+ 217:ex3.c         **** 
+ 218:ex3.c         ****         if (input == '1')
+ 662               		.loc 1 218 0
+ 663 004a 8091 0000 		lds r24,input
+ 664 004e 8133      		cpi r24,lo8(49)
+ 665 0050 01F0      		breq .+2
+ 666 0052 00C0      		rjmp .L42
+ 667 0054 00E0      		ldi r16,lo8(buffer)
+ 668 0056 10E0      		ldi r17,hi8(buffer)
+ 669 0058 6801      		movw r12,r16
+ 670 005a FF24      		clr r15
+ 671 005c F394      		inc r15
+ 672               	.L43:
+ 673               	.LVL57:
+ 674               	.LBB37:
+ 219:ex3.c         ****         {
+ 220:ex3.c         **** 
+ 221:ex3.c         ****             row = 0;
+ 222:ex3.c         ****             col = 0;
+ 223:ex3.c         ****             for (int i = 0; i < SIZE; i++)
+ 224:ex3.c         ****             {
+ 225:ex3.c         ****                 // wait for user input
+ 226:ex3.c         ****                 input = getKeyPad();
+ 675               		.loc 1 226 0 discriminator 3
+ 676 005e 0E94 0000 		call getKeyPad
+ 677               	.LVL58:
+ 678 0062 8093 0000 		sts input,r24
+ 227:ex3.c         **** 
+ 228:ex3.c         ****                 /* write single char to display */
+ 229:ex3.c         ****                 lcd_putc(input);
+ 679               		.loc 1 229 0 discriminator 3
+ 680 0066 0E94 0000 		call lcd_putc
+ 681               	.LVL59:
+ 230:ex3.c         ****                 buffer[i] = input;
+ 682               		.loc 1 230 0 discriminator 3
+ 683 006a 8091 0000 		lds r24,input
+ 684 006e F601      		movw r30,r12
+ 685 0070 8193      		st Z+,r24
+ 686 0072 6F01      		movw r12,r30
+ 687               	.LVL60:
+ 231:ex3.c         **** 
+ 232:ex3.c         ****                 col++;
+ 233:ex3.c         ****                 lcd_gotoxy(col, row);
+ 688               		.loc 1 233 0 discriminator 3
+ 689 0074 60E0      		ldi r22,0
+ 690 0076 8F2D      		mov r24,r15
+ 691 0078 0E94 0000 		call lcd_gotoxy
+ 692               	.LVL61:
+ 693 007c F394      		inc r15
+ 223:ex3.c         ****             {
+ 694               		.loc 1 223 0 discriminator 3
+ 695 007e FBE0      		ldi r31,lo8(11)
+ 696 0080 FF12      		cpse r15,r31
+ 697 0082 00C0      		rjmp .L43
+ 698               	.LBE37:
+ 234:ex3.c         ****             }
+ 235:ex3.c         **** 
+ 236:ex3.c         ****             // _delay_ms(1000);
+ 237:ex3.c         **** 
+ 238:ex3.c         ****             buffer[SIZE] = '\0';
+ 699               		.loc 1 238 0
+ 700 0084 1092 0000 		sts buffer+10,__zero_reg__
+ 239:ex3.c         **** 
+ 240:ex3.c         ****             lcd_clrscr();
+ 701               		.loc 1 240 0
+ 702 0088 0E94 0000 		call lcd_clrscr
+ 703               	.LVL62:
+ 241:ex3.c         **** 
+ 242:ex3.c         ****             lcd_puts("Processing...\n");
+ 704               		.loc 1 242 0
+ 705 008c 80E0      		ldi r24,lo8(.LC3)
+ 706 008e 90E0      		ldi r25,hi8(.LC3)
+ 707 0090 0E94 0000 		call lcd_puts
+ 708               	.LVL63:
+ 709               	.LBB38:
+ 710               	.LBB39:
+ 711               		.loc 2 187 0
+ 712 0094 2FEF      		ldi r18,lo8(3199999)
+ 713 0096 83ED      		ldi r24,hi8(3199999)
+ 714 0098 90E3      		ldi r25,hlo8(3199999)
+ 715 009a 2150      	1:	subi r18,1
+ 716 009c 8040      		sbci r24,0
+ 717 009e 9040      		sbci r25,0
+ 718 00a0 01F4      		brne 1b
+ 719 00a2 00C0      		rjmp .
+ 720 00a4 0000      		nop
+ 721               	.LVL64:
+ 722               	.LBE39:
+ 723               	.LBE38:
+ 243:ex3.c         ****             _delay_ms(1000);
+ 244:ex3.c         **** 
+ 245:ex3.c         ****             lcd_clrscr();
+ 724               		.loc 1 245 0
+ 725 00a6 0E94 0000 		call lcd_clrscr
+ 726               	.LVL65:
+ 246:ex3.c         **** 
+ 247:ex3.c         ****             EEPROMreadString(ADDRESS, keyString);
+ 727               		.loc 1 247 0
+ 728 00aa BE01      		movw r22,r28
+ 729 00ac 6F5F      		subi r22,-1
+ 730 00ae 7F4F      		sbci r23,-1
+ 731 00b0 80E0      		ldi r24,0
+ 732 00b2 90E0      		ldi r25,0
+ 733 00b4 0E94 0000 		call EEPROMreadString
  734               	.LVL66:
- 735               	.LBE56:
- 736               	.LBE55:
- 238:ex3.c         ****             _delay_ms(1000);
- 239:ex3.c         ****             lcd_clrscr();
- 737               		.loc 1 239 0
- 738 00ae 0E94 0000 		call lcd_clrscr
+ 248:ex3.c         **** 
+ 249:ex3.c         ****             key = atoi(keyString);
+ 735               		.loc 1 249 0
+ 736 00b8 CE01      		movw r24,r28
+ 737 00ba 0196      		adiw r24,1
+ 738 00bc 0E94 0000 		call atoi
  739               	.LVL67:
- 240:ex3.c         **** 
- 241:ex3.c         ****             lcd_puts(buffer);
- 740               		.loc 1 241 0
- 741 00b2 80E0      		ldi r24,lo8(buffer)
- 742 00b4 90E0      		ldi r25,hi8(buffer)
- 743 00b6 0E94 0000 		call lcd_puts
- 744               	.LVL68:
- 242:ex3.c         **** 
- 243:ex3.c         ****             lcd_gotoxy(0, 1);
- 745               		.loc 1 243 0
- 746 00ba 61E0      		ldi r22,lo8(1)
- 747 00bc 80E0      		ldi r24,0
- 748 00be 0E94 0000 		call lcd_gotoxy
- 749               	.LVL69:
- 244:ex3.c         ****             lcd_puts("Continue - #\n");
- 750               		.loc 1 244 0
- 751 00c2 80E0      		ldi r24,lo8(.LC4)
- 752 00c4 90E0      		ldi r25,hi8(.LC4)
- 753 00c6 0E94 0000 		call lcd_puts
- 754               	.LVL70:
- 755               	.LBB57:
- 756               	.LBB58:
- 757               		.loc 2 187 0
- 758 00ca EFEF      		ldi r30,lo8(15999999)
- 759 00cc F3E2      		ldi r31,hi8(15999999)
- 760 00ce 24EF      		ldi r18,hlo8(15999999)
- 761 00d0 E150      	1:	subi r30,1
- 762 00d2 F040      		sbci r31,0
- 763 00d4 2040      		sbci r18,0
- 764 00d6 01F4      		brne 1b
- 765 00d8 00C0      		rjmp .
- 766 00da 0000      		nop
+ 740 00c0 8093 0000 		sts key,r24
+ 741 00c4 9093 0000 		sts key+1,r25
+ 742               	.LVL68:
+ 743               	.L44:
+ 744               	.LBB40:
+ 250:ex3.c         **** 
+ 251:ex3.c         ****             for (int i = 0; i < SIZE; i++)
+ 252:ex3.c         ****             {
+ 253:ex3.c         ****                 buffer[i] = buffer[i] + key;
+ 745               		.loc 1 253 0 discriminator 3
+ 746 00c8 F801      		movw r30,r16
+ 747 00ca 9081      		ld r25,Z
+ 748 00cc 980F      		add r25,r24
+ 749 00ce 9193      		st Z+,r25
+ 750 00d0 8F01      		movw r16,r30
+ 751               	.LVL69:
+ 251:ex3.c         ****             {
+ 752               		.loc 1 251 0 discriminator 3
+ 753 00d2 F0E0      		ldi r31,hi8(buffer+10)
+ 754 00d4 0030      		cpi r16,lo8(buffer+10)
+ 755 00d6 1F07      		cpc r17,r31
+ 756 00d8 01F4      		brne .L44
+ 757               	.LBE40:
+ 254:ex3.c         ****             }
+ 255:ex3.c         **** 
+ 256:ex3.c         ****             // _delay_ms(1000);
+ 257:ex3.c         ****             lcd_puts(buffer);
+ 758               		.loc 1 257 0
+ 759 00da 80E0      		ldi r24,lo8(buffer)
+ 760 00dc 90E0      		ldi r25,hi8(buffer)
+ 761 00de 0E94 0000 		call lcd_puts
+ 762               	.LVL70:
+ 258:ex3.c         **** 
+ 259:ex3.c         ****             lcd_gotoxy(0, 1);
+ 763               		.loc 1 259 0
+ 764 00e2 61E0      		ldi r22,lo8(1)
+ 765 00e4 80E0      		ldi r24,0
+ 766 00e6 0E94 0000 		call lcd_gotoxy
  767               	.LVL71:
- 768               	.LBE58:
- 769               	.LBE57:
- 245:ex3.c         **** 
- 246:ex3.c         ****             // wait for user input
- 247:ex3.c         **** 
- 248:ex3.c         ****             _delay_ms(5000);
- 249:ex3.c         **** 
- 250:ex3.c         ****             lcd_clrscr();
- 770               		.loc 1 250 0
- 771 00dc 0E94 0000 		call lcd_clrscr
+ 260:ex3.c         ****             lcd_puts("Press any Con\n");
+ 768               		.loc 1 260 0
+ 769 00ea 80E0      		ldi r24,lo8(.LC4)
+ 770 00ec 90E0      		ldi r25,hi8(.LC4)
+ 771 00ee 0E94 0000 		call lcd_puts
  772               	.LVL72:
- 773 00e0 00C0      		rjmp .L41
- 774               	.LVL73:
- 775               	.L42:
- 776               	.LBB59:
- 251:ex3.c         ****         }
- 252:ex3.c         ****         else
- 253:ex3.c         ****         {
- 254:ex3.c         ****             lcd_gotoxy(0, 0);
- 777               		.loc 1 254 0
- 778 00e2 60E0      		ldi r22,0
- 779 00e4 80E0      		ldi r24,0
- 780 00e6 0E94 0000 		call lcd_gotoxy
- 781               	.LVL74:
- 255:ex3.c         ****             lcd_puts("Enter the Key\n");
- 782               		.loc 1 255 0
- 783 00ea 80E0      		ldi r24,lo8(.LC5)
- 784 00ec 90E0      		ldi r25,hi8(.LC5)
- 785 00ee 0E94 0000 		call lcd_puts
- 786               	.LVL75:
- 256:ex3.c         **** 
- 257:ex3.c         ****             row = 0;
- 258:ex3.c         ****             col = 0;
- 259:ex3.c         ****             int len = 0;
- 260:ex3.c         **** 
- 261:ex3.c         ****             lcd_gotoxy(0, 1);
- 787               		.loc 1 261 0
- 788 00f2 61E0      		ldi r22,lo8(1)
- 789 00f4 80E0      		ldi r24,0
- 790 00f6 0E94 0000 		call lcd_gotoxy
- 791               	.LVL76:
- 792 00fa 00E0      		ldi r16,lo8(buffer)
- 793 00fc 10E0      		ldi r17,hi8(buffer)
- 794 00fe C1E0      		ldi r28,lo8(1)
- 795               	.LVL77:
- 796               	.L46:
- 262:ex3.c         ****             row++;
- 263:ex3.c         ****             for (;;)
- 264:ex3.c         ****             {
- 265:ex3.c         ****                 // wait for user input
- 266:ex3.c         **** 
- 267:ex3.c         ****                 /* write single char to display */
- 268:ex3.c         ****                 lcd_putc(buffer[len]);
- 797               		.loc 1 268 0
- 798 0100 F801      		movw r30,r16
- 799 0102 8191      		ld r24,Z+
- 800 0104 8F01      		movw r16,r30
- 801               	.LVL78:
- 802 0106 0E94 0000 		call lcd_putc
- 803               	.LVL79:
- 804               	.LBB60:
- 805               	.LBB61:
- 806               		.loc 2 187 0
- 807 010a FFEF      		ldi r31,lo8(3199999)
- 808 010c 23ED      		ldi r18,hi8(3199999)
- 809 010e 80E3      		ldi r24,hlo8(3199999)
- 810 0110 F150      	1:	subi r31,1
- 811 0112 2040      		sbci r18,0
- 812 0114 8040      		sbci r24,0
- 813 0116 01F4      		brne 1b
- 814 0118 00C0      		rjmp .
- 815 011a 0000      		nop
- 816               	.LVL80:
- 817               	.LBE61:
- 818               	.LBE60:
- 269:ex3.c         **** 
- 270:ex3.c         ****                 _delay_ms(1000);
- 271:ex3.c         **** 
- 272:ex3.c         ****                 len++;
- 273:ex3.c         **** 
- 274:ex3.c         ****                 if (buffer[len] == '0')
- 819               		.loc 1 274 0
- 820 011c F801      		movw r30,r16
- 821 011e 8081      		ld r24,Z
- 822 0120 8033      		cpi r24,lo8(48)
- 823 0122 01F0      		breq .L45
- 824               	.LVL81:
- 275:ex3.c         ****                     break;
- 276:ex3.c         **** 
- 277:ex3.c         ****                 col++;
- 278:ex3.c         ****                 lcd_gotoxy(col, row);
- 825               		.loc 1 278 0
- 826 0124 61E0      		ldi r22,lo8(1)
- 827 0126 8C2F      		mov r24,r28
- 828 0128 0E94 0000 		call lcd_gotoxy
- 829               	.LVL82:
- 830 012c CF5F      		subi r28,lo8(-(1))
- 279:ex3.c         ****             }
- 831               		.loc 1 279 0
- 832 012e 00C0      		rjmp .L46
- 833               	.LVL83:
- 834               	.L45:
- 835               	.LBB62:
- 836               	.LBB63:
- 837               		.loc 2 187 0
- 838 0130 FFEF      		ldi r31,lo8(3199999)
- 839 0132 23ED      		ldi r18,hi8(3199999)
- 840 0134 80E3      		ldi r24,hlo8(3199999)
- 841 0136 F150      	1:	subi r31,1
- 842 0138 2040      		sbci r18,0
- 843 013a 8040      		sbci r24,0
- 844 013c 01F4      		brne 1b
- 845 013e 00C0      		rjmp .
- 846 0140 0000      		nop
- 847               	.LVL84:
- 848               	.LBE63:
- 849               	.LBE62:
- 280:ex3.c         **** 
- 281:ex3.c         ****             _delay_ms(1000);
- 282:ex3.c         ****             lcd_clrscr();
- 850               		.loc 1 282 0
- 851 0142 0E94 0000 		call lcd_clrscr
- 852               	.LVL85:
- 283:ex3.c         ****             buffer[SIZE] = '\0';
- 853               		.loc 1 283 0
- 854 0146 1092 0000 		sts buffer+10,__zero_reg__
- 284:ex3.c         **** 
- 285:ex3.c         ****             lcd_gotoxy(0, 0);
- 855               		.loc 1 285 0
- 856 014a 60E0      		ldi r22,0
- 857 014c 80E0      		ldi r24,0
- 858 014e 0E94 0000 		call lcd_gotoxy
- 859               	.LVL86:
- 286:ex3.c         ****             lcd_puts("Key is Saved!!!\n");
- 860               		.loc 1 286 0
- 861 0152 80E0      		ldi r24,lo8(.LC6)
- 862 0154 90E0      		ldi r25,hi8(.LC6)
- 863 0156 0E94 0000 		call lcd_puts
- 864               	.LVL87:
- 865               	.LBB64:
- 866               	.LBB65:
+ 261:ex3.c         **** 
+ 262:ex3.c         ****             input = getKeyPad();
+ 773               		.loc 1 262 0
+ 774 00f2 0E94 0000 		call getKeyPad
+ 775               	.LVL73:
+ 776 00f6 8093 0000 		sts input,r24
+ 263:ex3.c         **** 
+ 264:ex3.c         ****             lcd_clrscr();
+ 777               		.loc 1 264 0
+ 778 00fa 0E94 0000 		call lcd_clrscr
+ 779               	.LVL74:
+ 780 00fe 00C0      		rjmp .L41
+ 781               	.LVL75:
+ 782               	.L42:
+ 265:ex3.c         ****         }
+ 266:ex3.c         ****         else if (input == '2')
+ 783               		.loc 1 266 0
+ 784 0100 8233      		cpi r24,lo8(50)
+ 785 0102 01F0      		breq .+2
+ 786 0104 00C0      		rjmp .L41
+ 787               	.LBB41:
+ 267:ex3.c         ****         {
+ 268:ex3.c         ****             lcd_gotoxy(0, 0);
+ 788               		.loc 1 268 0
+ 789 0106 60E0      		ldi r22,0
+ 790 0108 80E0      		ldi r24,0
+ 791 010a 0E94 0000 		call lcd_gotoxy
+ 792               	.LVL76:
+ 269:ex3.c         ****             lcd_puts("Enter the Key\n");
+ 793               		.loc 1 269 0
+ 794 010e 80E0      		ldi r24,lo8(.LC5)
+ 795 0110 90E0      		ldi r25,hi8(.LC5)
+ 796 0112 0E94 0000 		call lcd_puts
+ 797               	.LVL77:
+ 270:ex3.c         **** 
+ 271:ex3.c         ****             row = 0;
+ 272:ex3.c         ****             col = 0;
+ 273:ex3.c         ****             int len = 0;
+ 274:ex3.c         **** 
+ 275:ex3.c         ****             lcd_gotoxy(0, 1);
+ 798               		.loc 1 275 0
+ 799 0116 61E0      		ldi r22,lo8(1)
+ 800 0118 80E0      		ldi r24,0
+ 801 011a 0E94 0000 		call lcd_gotoxy
+ 802               	.LVL78:
+ 803 011e 80E0      		ldi r24,lo8(buffer)
+ 804 0120 E82E      		mov r14,r24
+ 805 0122 80E0      		ldi r24,hi8(buffer)
+ 806 0124 F82E      		mov r15,r24
+ 272:ex3.c         ****             int len = 0;
+ 807               		.loc 1 272 0
+ 808 0126 00E0      		ldi r16,0
+ 809 0128 10E0      		ldi r17,0
+ 810               	.LVL79:
+ 811               	.L47:
+ 276:ex3.c         ****             row++;
+ 277:ex3.c         ****             for (;;)
+ 278:ex3.c         ****             {
+ 279:ex3.c         **** 
+ 280:ex3.c         ****                 // wait for user input
+ 281:ex3.c         ****                 input = getKeyPad();
+ 812               		.loc 1 281 0
+ 813 012a 0E94 0000 		call getKeyPad
+ 814               	.LVL80:
+ 815 012e 8093 0000 		sts input,r24
+ 282:ex3.c         **** 
+ 283:ex3.c         ****                 if (input == '#')
+ 816               		.loc 1 283 0
+ 817 0132 8332      		cpi r24,lo8(35)
+ 818 0134 01F0      		breq .L46
+ 284:ex3.c         ****                     break;
+ 285:ex3.c         **** 
+ 286:ex3.c         ****                 /* write single char to display */
+ 287:ex3.c         ****                 lcd_putc(input);
+ 819               		.loc 1 287 0
+ 820 0136 0E94 0000 		call lcd_putc
+ 821               	.LVL81:
+ 288:ex3.c         ****                 buffer[len] = input;
+ 822               		.loc 1 288 0
+ 823 013a 8091 0000 		lds r24,input
+ 824 013e F701      		movw r30,r14
+ 825 0140 8193      		st Z+,r24
+ 826 0142 7F01      		movw r14,r30
+ 827               	.LVL82:
+ 289:ex3.c         **** 
+ 290:ex3.c         ****                 len++;
+ 291:ex3.c         ****                 col++;
+ 828               		.loc 1 291 0
+ 829 0144 0F5F      		subi r16,-1
+ 830 0146 1F4F      		sbci r17,-1
+ 831               	.LVL83:
+ 292:ex3.c         ****                 lcd_gotoxy(col, row);
+ 832               		.loc 1 292 0
+ 833 0148 61E0      		ldi r22,lo8(1)
+ 834 014a 802F      		mov r24,r16
+ 835 014c 0E94 0000 		call lcd_gotoxy
+ 836               	.LVL84:
+ 293:ex3.c         ****             }
+ 837               		.loc 1 293 0
+ 838 0150 00C0      		rjmp .L47
+ 839               	.L46:
+ 294:ex3.c         **** 
+ 295:ex3.c         ****             lcd_clrscr();
+ 840               		.loc 1 295 0
+ 841 0152 0E94 0000 		call lcd_clrscr
+ 842               	.LVL85:
+ 296:ex3.c         ****             // _delay_ms(1000);
+ 297:ex3.c         ****             buffer[len] = '\0';
+ 843               		.loc 1 297 0
+ 844 0156 F801      		movw r30,r16
+ 845 0158 E050      		subi r30,lo8(-(buffer))
+ 846 015a F040      		sbci r31,hi8(-(buffer))
+ 847 015c 1082      		st Z,__zero_reg__
+ 298:ex3.c         **** 
+ 299:ex3.c         ****             EEPROMwriteString(ADDRESS, buffer);
+ 848               		.loc 1 299 0
+ 849 015e 60E0      		ldi r22,lo8(buffer)
+ 850 0160 70E0      		ldi r23,hi8(buffer)
+ 851 0162 80E0      		ldi r24,0
+ 852 0164 90E0      		ldi r25,0
+ 853 0166 0E94 0000 		call EEPROMwriteString
+ 854               	.LVL86:
+ 300:ex3.c         **** 
+ 301:ex3.c         ****             lcd_gotoxy(0, 0);
+ 855               		.loc 1 301 0
+ 856 016a 60E0      		ldi r22,0
+ 857 016c 80E0      		ldi r24,0
+ 858 016e 0E94 0000 		call lcd_gotoxy
+ 859               	.LVL87:
+ 302:ex3.c         **** 
+ 303:ex3.c         ****             lcd_puts("Key is Saved!!!\n");
+ 860               		.loc 1 303 0
+ 861 0172 80E0      		ldi r24,lo8(.LC6)
+ 862 0174 90E0      		ldi r25,hi8(.LC6)
+ 863 0176 0E94 0000 		call lcd_puts
+ 864               	.LVL88:
+ 865               	.LBB42:
+ 866               	.LBB43:
  867               		.loc 2 187 0
- 868 015a 9FEF      		ldi r25,lo8(12799999)
- 869 015c EFE4      		ldi r30,hi8(12799999)
- 870 015e F3EC      		ldi r31,hlo8(12799999)
- 871 0160 9150      	1:	subi r25,1
- 872 0162 E040      		sbci r30,0
- 873 0164 F040      		sbci r31,0
- 874 0166 01F4      		brne 1b
- 875 0168 00C0      		rjmp .
- 876 016a 0000      		nop
- 877 016c 00C0      		rjmp .L41
- 878               	.LBE65:
- 879               	.LBE64:
- 880               	.LBE59:
+ 868 017a FFEF      		ldi r31,lo8(3199999)
+ 869 017c 23ED      		ldi r18,hi8(3199999)
+ 870 017e 80E3      		ldi r24,hlo8(3199999)
+ 871 0180 F150      	1:	subi r31,1
+ 872 0182 2040      		sbci r18,0
+ 873 0184 8040      		sbci r24,0
+ 874 0186 01F4      		brne 1b
+ 875 0188 00C0      		rjmp .
+ 876 018a 0000      		nop
+ 877 018c 00C0      		rjmp .L41
+ 878               	.LBE43:
+ 879               	.LBE42:
+ 880               	.LBE41:
  881               		.cfi_endproc
  882               	.LFE18:
  884               	.global	input
@@ -1379,6 +1398,7 @@
  897               	.Letext0:
  898               		.file 3 "/usr/lib/avr/include/stdint.h"
  899               		.file 4 "lcd.h"
+ 900               		.file 5 "/usr/lib/avr/include/stdlib.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 ex3.c
                ex3.s:2      *ABS*:000000000000003e __SP_H__
@@ -1404,5 +1424,6 @@ lcd_clrscr
 lcd_gotoxy
 lcd_puts
 lcd_putc
+atoi
 __do_copy_data
 __do_clear_bss

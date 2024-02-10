@@ -197,6 +197,8 @@ int main(void)
     lcd_init(LCD_DISP_ON);
     int row, col;
 
+    char keyString[SIZE + 1];
+
     while (1)
     {
         /* clear display and home cursor */
@@ -209,47 +211,59 @@ int main(void)
         lcd_puts("(Encrypt/Key)\n");
 
         // wait for user input
+        input = getKeyPad();
 
-        _delay_ms(5000);
         lcd_clrscr();
 
         if (input == '1')
         {
+
             row = 0;
             col = 0;
             for (int i = 0; i < SIZE; i++)
             {
                 // wait for user input
+                input = getKeyPad();
 
                 /* write single char to display */
-                lcd_putc(buffer[i]);
-
-                _delay_ms(1000);
+                lcd_putc(input);
+                buffer[i] = input;
 
                 col++;
                 lcd_gotoxy(col, row);
             }
 
-            _delay_ms(1000);
-            lcd_clrscr();
+            // _delay_ms(1000);
+
             buffer[SIZE] = '\0';
+
+            lcd_clrscr();
 
             lcd_puts("Processing...\n");
             _delay_ms(1000);
+
             lcd_clrscr();
 
+            EEPROMreadString(ADDRESS, keyString);
+
+            key = atoi(keyString);
+
+            for (int i = 0; i < SIZE; i++)
+            {
+                buffer[i] = buffer[i] + key;
+            }
+
+            // _delay_ms(1000);
             lcd_puts(buffer);
 
             lcd_gotoxy(0, 1);
-            lcd_puts("Continue - #\n");
+            lcd_puts("Press any Con\n");
 
-            // wait for user input
-
-            _delay_ms(5000);
+            input = getKeyPad();
 
             lcd_clrscr();
         }
-        else
+        else if (input == '2')
         {
             lcd_gotoxy(0, 0);
             lcd_puts("Enter the Key\n");
@@ -262,29 +276,32 @@ int main(void)
             row++;
             for (;;)
             {
+
                 // wait for user input
+                input = getKeyPad();
 
-                /* write single char to display */
-                lcd_putc(buffer[len]);
-
-                _delay_ms(1000);
-
-                len++;
-
-                if (buffer[len] == '0')
+                if (input == '#')
                     break;
 
+                /* write single char to display */
+                lcd_putc(input);
+                buffer[len] = input;
+
+                len++;
                 col++;
                 lcd_gotoxy(col, row);
             }
 
-            _delay_ms(1000);
             lcd_clrscr();
-            buffer[SIZE] = '\0';
+            // _delay_ms(1000);
+            buffer[len] = '\0';
+
+            EEPROMwriteString(ADDRESS, buffer);
 
             lcd_gotoxy(0, 0);
+
             lcd_puts("Key is Saved!!!\n");
-            _delay_ms(4000);
+            _delay_ms(1000);
         }
     }
 }

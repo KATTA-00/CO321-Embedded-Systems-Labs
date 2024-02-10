@@ -126,38 +126,38 @@ void columnOutRowIn()
 {
 
     // DDRB
-    // DDRB = 0b00000011;
-    // DDRD = 0b11000000;
+    DDRB = 0b00000011;
+    DDRD = 0b11000000;
 
-    DDRB |= (1 << PINB0) | (1 << PINB1);
-    DDRB &= ~((1 << PINB2) | (1 << PINB3) | (1 << PINB4) | (1 << PINB5));
-    DDRD |= (1 << PIND6) | (1 << PIND7);
+    // DDRB |= (1 << PINB0) | (1 << PINB1);
+    // DDRB &= ~((1 << PINB2) | (1 << PINB3) | (1 << PINB4) | (1 << PINB5));
+    // DDRD |= (1 << PIND6) | (1 << PIND7);
 
-    // PORTB = 0b00000011;
-    // PORTD = 0b11000000;
+    PORTB = 0b00000011;
+    PORTD = 0b11000000;
 
-    PORTB |= (1 << PINB0) | (1 << PINB1);
-    PORTB &= ~((1 << PINB2) | (1 << PINB3) | (1 << PINB4) | (1 << PINB5));
-    PORTD |= (1 << PIND6) | (1 << PIND7);
+    // PORTB |= (1 << PINB0) | (1 << PINB1);
+    // PORTB &= ~((1 << PINB2) | (1 << PINB3) | (1 << PINB4) | (1 << PINB5));
+    // PORTD |= (1 << PIND6) | (1 << PIND7);
 
     _delay_ms(10);
 }
 
 void columnInRowOut()
 {
-    // DDRB = 0b00111100;
-    // DDRD = 0b00000000;
+    DDRB = 0b00111100;
+    DDRD = 0b00000000;
 
-    DDRB |= (1 << PINB2) | (1 << PINB3) | (1 << PINB4) | (1 << PINB5);
-    DDRB &= ~((1 << PINB0) | (1 << PINB1));
-    DDRD &= ~((1 << PIND6) | (1 << PIND7));
+    // DDRB |= (1 << PINB2) | (1 << PINB3) | (1 << PINB4) | (1 << PINB5);
+    // DDRB &= ~((1 << PINB0) | (1 << PINB1));
+    // DDRD &= ~((1 << PIND6) | (1 << PIND7));
 
-    // PORTB = 0b00111100;
-    // PORTD = 0b00000000;
+    PORTB = 0b00111100;
+    PORTD = 0b00000000;
 
-    PORTB |= (1 << PINB2) | (1 << PINB3) | (1 << PINB4) | (1 << PINB5);
-    PORTB &= ~((1 << PINB0) | (1 << PINB1));
-    PORTD &= ~((1 << PIND6) | (1 << PIND7));
+    // PORTB |= (1 << PINB2) | (1 << PINB3) | (1 << PINB4) | (1 << PINB5);
+    // PORTB &= ~((1 << PINB0) | (1 << PINB1));
+    // PORTD &= ~((1 << PIND6) | (1 << PIND7));
 
     _delay_ms(10);
 }
@@ -175,8 +175,19 @@ char getKeyPad()
     int i = -1;
     int j = -1;
 
+    usart_send_string("i, j - ");
+    usart_send_int(i);
+    usart_send(',');
+    usart_send_int(j);
+    usart_send('\n');
+
+    usart_send_string("values - ");
+    usart_send(keyPad[i][j]);
+    usart_send('\n');
+
     _delay_ms(10);
     columnOutRowIn();
+
     while (i == -1)
     {
         _delay_ms(10);
@@ -200,6 +211,16 @@ char getKeyPad()
 
     _delay_ms(10);
 
+    usart_send_string("i, j - ");
+    usart_send_int(i);
+    usart_send(',');
+    usart_send_int(j);
+    usart_send('\n');
+
+    usart_send_string("values - ");
+    usart_send(keyPad[i][j]);
+    usart_send('\n');
+
     columnInRowOut();
     while (j == -1)
     {
@@ -220,19 +241,21 @@ char getKeyPad()
         {
             j = 0;
         }
+
+        usart_send_string("100\n");
     }
 
     _delay_ms(100);
 
-    // usart_send_string("i, j - ");
-    // usart_send_int(i);
-    // usart_send(',');
-    // usart_send_int(j);
-    // usart_send('\n');
+    usart_send_string("i, j - ");
+    usart_send_int(i);
+    usart_send(',');
+    usart_send_int(j);
+    usart_send('\n');
 
-    // usart_send_string("values - ");
-    // usart_send(keyPad[i][j]);
-    // usart_send('\n');
+    usart_send_string("values - ");
+    usart_send(keyPad[i][j]);
+    usart_send('\n');
 
     return keyPad[i][j];
 }
@@ -240,6 +263,7 @@ char getKeyPad()
 int main(void)
 {
     usart_init(MYUBRR);
+    // usart_send_string("getKeyPad - ");
 
     while (1)
     {
